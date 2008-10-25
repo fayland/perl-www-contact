@@ -1,0 +1,19 @@
+Build.PL
+Changes
+lib/WWW/Contact.pm
+lib/WWW/Contact/Base.pm
+lib/WWW/Contact/Gmail.pm
+lib/WWW/Contact/Rediffmail.pm
+lib/WWW/Contact/Yahoo.pm
+Makefile.PL
+MANIFEST			This list of files
+META.yml
+README
+t/00-load.t
+t/01-basic.t
+t/02-supplier.t
+t/101-gmail.t
+t/102-yahoo.t
+t/103-rediff.t
+t/lib/WWW/Contact/Unknown.pm
+t/pod.t

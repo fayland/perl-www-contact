@@ -1,0 +1,14 @@
+Revision history for WWW-Contact
+
+0.04    2008.10.26
+        add Rediffmail supplier by Sachin Sebastian, C<< <sachinjsk at cpan.org> >>
+
+0.03    2008.10.16
+        add @ymail.com @rocketmail.com support
+
+0.02    2008.10.11
+        clean code and better doc.
+
+0.01    2008.10.3
+        First version, released on an unsuspecting world.
+
