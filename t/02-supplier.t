@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use FindBin qw/$Bin/;
 use lib "$Bin/lib";
-use Test::More tests => 4;
+use Test::More tests => 5;
 use WWW::Contact;
 
 my $wc = new WWW::Contact;
@@ -20,5 +20,8 @@ is($supplier, 'Yahoo', '$supplier OK');
 
 $supplier = $wc->get_supplier_by_email('fayland@rocketmail.com');
 is($supplier, 'Yahoo', '$supplier OK');
+
+$supplier = $wc->get_supplier_by_email('fayland@rediffmail.com');
+is($supplier, 'Rediffmail', '$supplier OK');
 
 1;

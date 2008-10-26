@@ -3,15 +3,28 @@ package WWW::Contact;
 use Moose;
 use Moose::Util::TypeConstraints;
 
-our $VERSION   = '0.05';
+our $VERSION   = '0.06';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 has 'errstr'   => ( is => 'rw', isa => 'Maybe[Str]' );
 has 'supplier_pattern' => (
-    is => 'rw',
+    is  => 'rw',
     isa => 'ArrayRef',
     auto_deref => 1,
     default => sub { [] }
+);
+has 'known_supplier' => (
+    is  => 'rw',
+    isa => 'HashRef',
+    auto_deref => 1,
+    default => sub {
+        {
+            'gmail.com'      => 'Gmail',
+            'ymail.com'      => 'Yahoo',
+            'rocketmail.com' => 'Yahoo',
+            'rediffmail.com' => 'Rediffmail',
+        }
+    }
 );
 
 sub get_contacts {
@@ -62,14 +75,17 @@ sub get_contacts {
 sub get_supplier_by_email {
     my ($self, $email) = @_;
 
+    my %known_supplier = $self->known_supplier;
+
     my ($username, $domain) = split('@', $email);
-    # @yahoo.com @yahoo.XX @ymail.com @rocketmail.com
-    if ($email =~ /[\@\.]yahoo\./ or $domain eq 'ymail.com' or $domain eq 'rocketmail.com' ) {
+    
+    if ( exists $known_supplier{ $domain } ) {
+        return $known_supplier{ $domain };
+    }
+    
+    # @yahoo.com @yahoo.XX @XX.yahoo.XX
+    if ( $email =~ /[\@\.]yahoo\./ ) {
         return 'Yahoo';
-    } elsif ($email =~ /\@gmail\.com$/) {
-        return 'Gmail';
-    } elsif ( $domain eq 'rediffmail.com' ) {
-        return 'Rediffmail';
     }
     
     my @supplier_pattern = $self->supplier_pattern;
