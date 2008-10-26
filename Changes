@@ -1,7 +1,9 @@
 Revision history for WWW-Contact
 
-0.06
+0.06    2008.10.26
         known_supplier hash
+        t/999-author.t
+        add WWW::Contact::CN::163 for mail.163.com
 
 0.05    2008.10.26
         pod tweak

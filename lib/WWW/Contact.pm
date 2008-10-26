@@ -23,6 +23,12 @@ has 'known_supplier' => (
             'ymail.com'      => 'Yahoo',
             'rocketmail.com' => 'Yahoo',
             'rediffmail.com' => 'Rediffmail',
+            
+            # cn
+            '163.com'        => 'CN::163',
+            'yeah.net'       => 'CN::163',
+            'netease.com'    => 'CN::163',
+            'popo.163.com'   => 'CN::163',
         }
     }
 );
@@ -150,6 +156,10 @@ L<WWW::Contact::Yahoo> By Fayland Lam
 =item Rediffmail
 
 L<WWW::Contact::Rediffmail> By Sachin Sebastian
+
+=item mail.163.com
+
+L<WWW::Contact::CN::163> By Fayland Lam
 
 =back
 
