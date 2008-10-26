@@ -11,6 +11,11 @@ BEGIN {
     plan skip_all => "author tests" unless (-e "$Bin/author.txt");
 }
 
+# sample author.txt (without '# ')
+# tester_cpan@rediffmail.com      xxxx
+# fayland@gmail.com               yyyy
+# fayland@yahoo.com               zzzz 
+
 open(my $fh, '<', "$Bin/author.txt");
 local $/;
 my $test = <$fh>;
