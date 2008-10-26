@@ -127,6 +127,10 @@ Get Contacts/AddressBook from public websites.
 
 =item Yahoo! Mail
 
+=item Rediffmail
+
+By Sachin Sebastian, C<< <sachinjsk at cpan.org> >>
+
 =back
 
 =head1 METHODS
