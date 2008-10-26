@@ -1,3 +1,5 @@
+author.txt$
+
 # Avoid version control files.
 \bRCS\b
 \bCVS\b
