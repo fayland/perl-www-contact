@@ -37,7 +37,6 @@ sub get_contacts {
         $self->get($1) || return;
     }
     
-    $self->debug_to_file('E:\163.txt');
     my ($sid) = ( $ua->content() =~ /sid\=(\w+)(\"|\&)/ );
     unless ( $sid ) {
         $self->errstr('Unknown Error');
