@@ -199,6 +199,20 @@ We can use it within WWW::Contact
 
 L<WWW::Contact::Gmail>, L<WWW::Contact::Yahoo>, L<WWW::Mechanize>, L<Moose>
 
+=head1 SUPPORTS
+
+=over 4
+
+=item Code trunk
+
+L<http://code.google.com/p/perl-www-contact/>
+
+=item Group
+
+L<http://groups.google.com/group/perl-www-contact>
+
+=back
+
 =head1 AUTHOR
 
 Fayland Lam, C<< <fayland at gmail.com> >>
