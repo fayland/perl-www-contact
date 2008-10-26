@@ -46,7 +46,7 @@ sub get_contacts {
 }
 
 sub get_contacts_from_html {
-    my ($self, $content) = @_;;
+    my ($self, $content) = @_;
     
     my (@names, @emails);
     
