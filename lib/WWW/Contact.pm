@@ -217,6 +217,8 @@ L<http://groups.google.com/group/perl-www-contact>
 
 Fayland Lam, C<< <fayland at gmail.com> >>
 
+Sachin Sebastian, C<< <sachinjsk at cpan.org> >>
+
 =head1 COPYRIGHT & LICENSE
 
 Copyright 2008 Fayland Lam, all rights reserved.
