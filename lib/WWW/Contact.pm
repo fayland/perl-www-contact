@@ -125,11 +125,15 @@ Get Contacts/AddressBook from public websites.
 
 =item Gmail
 
+L<WWW::Contact::Gmail> By Fayland Lam
+
 =item Yahoo! Mail
+
+L<WWW::Contact::Yahoo> By Fayland Lam
 
 =item Rediffmail
 
-By Sachin Sebastian, C<< <sachinjsk at cpan.org> >>
+L<WWW::Contact::Rediffmail> By Sachin Sebastian
 
 =back
 
@@ -197,7 +201,7 @@ We can use it within WWW::Contact
 
 =head1 SEE ALSO
 
-L<WWW::Contact::Gmail>, L<WWW::Contact::Yahoo>, L<WWW::Mechanize>, L<Moose>
+L<WWW::Mechanize>, L<Moose>
 
 =head1 SUPPORTS
 
