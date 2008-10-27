@@ -4,7 +4,7 @@ use Class::MOP ();
 use Moose;
 use Moose::Util::TypeConstraints;
 
-our $VERSION   = '0.07';
+our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 has 'errstr'   => ( is => 'rw', isa => 'Maybe[Str]' );
@@ -31,6 +31,20 @@ has 'known_supplier' => (
             'yeah.net'       => 'CN::163',
             'netease.com'    => 'CN::163',
             'popo.163.com'   => 'CN::163',
+
+            # Mail
+            'mail.com'       => 'Mail',
+            'email.com'      => 'Mail',
+            'iname.com'      => 'Mail',
+            'cheerful.com'   => 'Mail',
+            'consultant.com' => 'Mail',
+            'europe.com'     => 'Mail',
+            'mindless.com'   => 'Mail',
+            'earthling.com'  => 'Mail',
+            'myself.com'     => 'Mail',
+            'techie.com'     => 'Mail',
+            'usa.com'        => 'Mail',
+            'writeme.com'    => 'Mail',
         }
     }
 );
@@ -163,6 +177,10 @@ L<WWW::Contact::CN::163> By Fayland Lam
 =item AOL
 
 L<WWW::Contact::AOL> By Fayland Lam
+
+=item Mail
+
+L<WWW::Contact::Mail> By Sachin Sebastian
 
 =back
 

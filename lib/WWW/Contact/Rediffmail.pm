@@ -3,7 +3,7 @@ package WWW::Contact::Rediffmail;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.02';
+our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:SACHINJSK';
 
 has '+ua_class' => ( default => 'WWW::Mechanize::GZip' );

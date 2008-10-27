@@ -95,16 +95,20 @@ WWW::Contact::Mail - Get contacts from Mail.com
 
 get contacts from Mail.com. extends L<WWW::Contact::Base>
 
-Mail.com provides email addresses under different domains. Popular ones include:
+Mail.com provides email addresses under different domain names. We currently support the most popular ones.
     mail.com
     email.com
-    myself.com
-    writeme.com
-    usa.com
     iname.com
+    cheerful.com
+    consultant.com
+    europe.com
+    mindless.com
+    earthling.net
+    myself.com
+    post.com
     techie.com
-    
-Visit www.mail.com to see the complete list.
+    usa.com
+    writeme.com
 
 =head1 SEE ALSO
 

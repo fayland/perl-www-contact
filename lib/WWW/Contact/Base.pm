@@ -5,7 +5,7 @@ use Moose::Util::TypeConstraints;
 use Carp qw/croak/;
 use Data::Dumper;
 
-our $VERSION   = '0.07';
+our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 my $sub_verbose = sub {
