@@ -37,6 +37,10 @@ sub get_contacts {
         $post_url = 'https://msnia.login.live.com/ppsecure/post.srf';
     }
     
+    #  switch(g_iActiveCredtype){case 1:if(g_fLWASilentAuth==true)s.type.value=30;else s.type.value=11;break;case 2:s.type.value=12;if(s.CS.value==""){if(!SubmitCardSpace())return false;}break;case 4:s.type.value=14;if(g_fEIDSupported&&typeof g_EIDScriptDL!="undefined"){if(!EIDSubmit(s))return false;}break;case 3:s.type.value=13;
+    my $type = 11;
+    # XXX? It's a bit complicated. need FIX later.
+    
     # try me, STUPID Microsoft always wants to get rid of US!
     $ua->request(POST $post_url, [
 	    idsbho  => 1,
@@ -45,7 +49,7 @@ sub get_contacts {
 	    CS       => undef,
 	    FedState => undef,
 	    PPSX => 'PassportR',
-	    type => 11,
+	    type => $type,
 	    login  => $email,
 	    passwd => $password,
 	    NewUser => 1,
@@ -138,7 +142,7 @@ WWW::Contact::Hotmail - Get contacts/addressbook from Hotmail/Live Mail
 
 =head1 DESCRIPTION
 
-get contacts from Hotmail/Live Mail. extends L<WWW::Contact::Base>
+get contacts from Hotmail/Live Mail L<http://www.hotmail.com>. extends L<WWW::Contact::Base>
 
 =head1 WARNING
 
