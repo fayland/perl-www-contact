@@ -3,7 +3,7 @@ package WWW::Contact::CN::163;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.08';
+our $VERSION   = '0.12';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
@@ -93,10 +93,10 @@ WWW::Contact::CN::163 - Get contacts/addressbook from mail.163.com
 
 =head1 SYNOPSIS
 
-    use WWW::Contact::CN::163;
+    use WWW::Contact;
     
-    my $wc       = WWW::Contact::CN::163->new();
-    my @contacts = $wc->get_contacts('fayland@163.com', 'password');
+    my $wc       = WWW::Contact->new();
+    my @contacts = $wc->get_contacts('itsa@163.com', 'password');
     my $errstr   = $wc->errstr;
     if ($errstr) {
         die $errstr;

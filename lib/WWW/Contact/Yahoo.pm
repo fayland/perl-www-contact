@@ -3,7 +3,7 @@ package WWW::Contact::Yahoo;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.08';
+our $VERSION   = '0.12';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 has '+ua_class' => ( default => 'WWW::Mechanize::GZip' );
@@ -74,9 +74,9 @@ WWW::Contact::Yahoo - Get contacts/addressbook from Yahoo! Mail
 
 =head1 SYNOPSIS
 
-    use WWW::Contact::Yahoo;
+    use WWW::Contact;
     
-    my $wc       = WWW::Contact::Yahoo->new();
+    my $wc       = WWW::Contact->new();
     my @contacts = $wc->get_contacts('itsa@yahoo.com', 'password');
     my $errstr   = $wc->errstr;
     if ($errstr) {

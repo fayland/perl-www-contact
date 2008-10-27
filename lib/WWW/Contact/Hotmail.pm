@@ -6,7 +6,7 @@ extends 'WWW::Contact::Base';
 use HTTP::Request::Common qw/POST/;
 use HTML::TokeParser::Simple;
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.12';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
@@ -129,10 +129,10 @@ WWW::Contact::Hotmail - Get contacts/addressbook from Hotmail/Live Mail
 
 =head1 SYNOPSIS
 
-    use WWW::Contact::Hotmail;
+    use WWW::Contact;
     
-    my $wc       = WWW::Contact::Hotmail->new();
-    my @contacts = $wc->get_contacts('fayland@hotmail.com', 'password');
+    my $wc       = WWW::Contact->new();
+    my @contacts = $wc->get_contacts('itsa@hotmail.com', 'password');
     my $errstr   = $wc->errstr;
     if ($errstr) {
         die $errstr;

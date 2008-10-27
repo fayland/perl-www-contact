@@ -3,7 +3,7 @@ package WWW::Contact::AOL;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.08';
+our $VERSION   = '0.12';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
@@ -114,10 +114,10 @@ WWW::Contact::AOL - Get contacts/addressbook from AOL Mail
 
 =head1 SYNOPSIS
 
-    use WWW::Contact::AOL;
+    use WWW::Contact;
     
-    my $wc       = WWW::Contact::AOL->new();
-    my @contacts = $wc->get_contacts('fayland@aol.com', 'password');
+    my $wc       = WWW::Contact->new();
+    my @contacts = $wc->get_contacts('itsa@aol.com', 'password');
     my $errstr   = $wc->errstr;
     if ($errstr) {
         die $errstr;

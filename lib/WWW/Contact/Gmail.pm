@@ -3,7 +3,7 @@ package WWW::Contact::Gmail;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.08';
+our $VERSION   = '0.12';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 use HTML::TokeParser::Simple;
@@ -102,10 +102,10 @@ WWW::Contact::Gmail - Get contacts/addressbook from Gmail
 
 =head1 SYNOPSIS
 
-    use WWW::Contact::Gmail;
+    use WWW::Contact;
     
-    my $wc       = WWW::Contact::Gmail->new();
-    my @contacts = $wc->get_contacts('fayland@gmail.com', 'password');
+    my $wc       = WWW::Contact->new();
+    my @contacts = $wc->get_contacts('itsa@gmail.com', 'password');
     my $errstr   = $wc->errstr;
     if ($errstr) {
         die $errstr;

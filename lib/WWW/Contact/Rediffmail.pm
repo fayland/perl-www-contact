@@ -3,7 +3,7 @@ package WWW::Contact::Rediffmail;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.08';
+our $VERSION   = '0.12';
 our $AUTHORITY = 'cpan:SACHINJSK';
 
 has '+ua_class' => ( default => 'WWW::Mechanize::GZip' );
@@ -93,10 +93,10 @@ WWW::Contact::Rediffmail - Get contacts from Rediffmail
 
 =head1 SYNOPSIS
 
-    use WWW::Contact::Rediffmail;
+    use WWW::Contact;
     
-    my $wc       = WWW::Contact::Rediffmail->new();
-    my @contacts = $wc->get_contacts('email@rediffmail.com', 'password');
+    my $wc       = WWW::Contact->new();
+    my @contacts = $wc->get_contacts('itsa@rediffmail.com', 'password');
     my $errstr   = $wc->errstr;
     if ($errstr) {
         die $errstr;
