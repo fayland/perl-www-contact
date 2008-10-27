@@ -1,5 +1,8 @@
 Revision history for WWW-Contact
 
+0.10    2008.10.27
+        bump version up to PAUSE
+
 0.09    2008.10.27
         add WWW::Contact::Hotmail by Fayland
 
