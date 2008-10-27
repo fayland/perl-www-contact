@@ -85,4 +85,4 @@ if ( $is_broken ) {
     die "Error sending email: $@" if $@;
 }
 
-print $body;
+1;
