@@ -1,5 +1,8 @@
 Revision history for WWW-Contact
 
+0.07    2008.10.27
+        add WWW::Contact::AOL by Fayland
+
 0.06    2008.10.26
         known_supplier hash
         t/999-author.t

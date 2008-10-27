@@ -3,7 +3,7 @@ package WWW::Contact::Yahoo;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.03';
+our $VERSION   = '0.07';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 has '+ua_class' => ( default => 'WWW::Mechanize::GZip' );
@@ -63,6 +63,7 @@ sub get_contacts {
 }
 
 no Moose;
+__PACKAGE__->meta->make_immutable;
 
 1;
 __END__

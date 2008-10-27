@@ -5,7 +5,7 @@ use Moose::Util::TypeConstraints;
 use Carp qw/croak/;
 use Data::Dumper;
 
-our $VERSION   = '0.02';
+our $VERSION   = '0.07';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 my $sub_verbose = sub {
@@ -108,6 +108,8 @@ sub submit_form {
 
 no Moose;
 no Moose::Util::TypeConstraints;
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 __END__

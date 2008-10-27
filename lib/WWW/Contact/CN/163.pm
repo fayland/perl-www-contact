@@ -3,7 +3,7 @@ package WWW::Contact::CN::163;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.07';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
@@ -82,6 +82,7 @@ sub get_contacts_from_html {
 }
 
 no Moose;
+__PACKAGE__->meta->make_immutable;
 
 1;
 __END__

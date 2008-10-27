@@ -3,7 +3,7 @@ package WWW::Contact::Rediffmail;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.07';
 our $AUTHORITY = 'cpan:SACHINJSK';
 
 has '+ua_class' => ( default => 'WWW::Mechanize::GZip' );
@@ -83,6 +83,7 @@ sub get_contacts_from_thunderbird_csv {
 }
 
 no Moose;
+__PACKAGE__->meta->make_immutable;
 
 1;
 __END__

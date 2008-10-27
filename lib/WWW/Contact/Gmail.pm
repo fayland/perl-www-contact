@@ -3,7 +3,7 @@ package WWW::Contact::Gmail;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.02';
+our $VERSION   = '0.07';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 use HTML::TokeParser::Simple;
@@ -91,6 +91,7 @@ sub get_contacts_from_html {
 }
 
 no Moose;
+__PACKAGE__->meta->make_immutable;
 
 1;
 __END__

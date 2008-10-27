@@ -1,9 +1,10 @@
 package WWW::Contact;
 
+use Class::MOP ();
 use Moose;
 use Moose::Util::TypeConstraints;
 
-our $VERSION   = '0.06';
+our $VERSION   = '0.07';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 has 'errstr'   => ( is => 'rw', isa => 'Maybe[Str]' );
@@ -23,6 +24,7 @@ has 'known_supplier' => (
             'ymail.com'      => 'Yahoo',
             'rocketmail.com' => 'Yahoo',
             'rediffmail.com' => 'Rediffmail',
+            'aol.com'        => 'AOL',
             
             # cn
             '163.com'        => 'CN::163',
@@ -57,12 +59,7 @@ sub get_contacts {
     }
     
     my $module = 'WWW::Contact::' . $supplier;
-    eval("use $module;");
-    if ($@) {
-        $self->errstr($@);
-        return;
-    }
-    
+    Class::MOP::load_class($module);
     my $wc = new $module;
     
     # reset
@@ -117,6 +114,8 @@ sub register_supplier {
 no Moose;
 no Moose::Util::TypeConstraints;
 
+__PACKAGE__->meta->make_immutable;
+
 1;
 __END__
 
@@ -160,6 +159,10 @@ L<WWW::Contact::Rediffmail> By Sachin Sebastian
 =item mail.163.com
 
 L<WWW::Contact::CN::163> By Fayland Lam
+
+=item AOL
+
+L<WWW::Contact::AOL> By Fayland Lam
 
 =back
 
