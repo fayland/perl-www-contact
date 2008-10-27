@@ -1,6 +1,7 @@
 Build.PL
 Changes
 lib/WWW/Contact.pm
+lib/WWW/Contact/AOL.pm
 lib/WWW/Contact/Base.pm
 lib/WWW/Contact/CN/163.pm
 lib/WWW/Contact/Gmail.pm
@@ -17,6 +18,7 @@ t/101-gmail.t
 t/102-yahoo.t
 t/103-rediff.t
 t/104-163.t
+t/105-aol.t
 t/999-author.t
 t/lib/WWW/Contact/Unknown.pm
 t/pod.t
