@@ -3,7 +3,7 @@ package WWW::Contact::AOL;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.08';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
@@ -53,9 +53,9 @@ sub get_contacts {
         return;
     }
     
-    # http://webmail.aol.com/34865/aol/en-us/Lite/addresslist-print.aspx?command=all&sort=FirstLastNick&sortDir=Ascending&nameFormat=FirstLastNick&user=lP9ZCc0KdY
+    # http://webmail.aol.com/39598/aol/en-us/Lite/addresslist-print.aspx?command=all&sort=FirstLastNick&sortDir=Ascending&nameFormat=FirstLastNick&user=lP9ZCc0KdY
     $ua->get(
-        "http://webmail.aol.com/$gSuccessPath/aol/en-us/AB/addresslist-print.aspx?command=all&undefined&sort=LastFirstNick&sortDir=Ascending&nameFormat=FirstLastNick&version=$gSuccessPath:webmail.aol.com&user=$uid"
+        "http://webmail.aol.com/$gSuccessPath/aol/en-us/Lite/addresslist-print.aspx?command=all&sort=FirstLastNick&sortDir=Ascending&nameFormat=FirstLastNick&user=$uid"
     ) || return;
 
     $content = $ua->content();
