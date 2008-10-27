@@ -55,6 +55,8 @@ foreach my $line ( @lines ) {
 }
 
 if ( $is_broken ) {
+    print STDERR $body;
+    
     # get mail account
     open(my $fh2, '<', "$Bin/gmail_account.txt");
     my $mail_info = <$fh2>;
