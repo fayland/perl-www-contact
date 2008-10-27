@@ -3,7 +3,7 @@ package WWW::Contact::Mail;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.09';
 our $AUTHORITY = 'cpan:SACHINJSK';
 
 has '+ua_class' => ( default => 'WWW::Mechanize::GZip' );
@@ -70,6 +70,7 @@ sub get_contacts_from_csv {
 }
 
 no Moose;
+__PACKAGE__->meta->make_immutable;
 
 1;
 __END__
