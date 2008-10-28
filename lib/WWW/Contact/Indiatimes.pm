@@ -3,7 +3,7 @@ package WWW::Contact::Indiatimes;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.14';
 our $AUTHORITY = 'cpan:SACHINJSK';
 
 has '+ua_class' => ( default => 'WWW::Mechanize::GZip' );

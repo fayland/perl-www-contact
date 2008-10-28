@@ -4,7 +4,7 @@ use Class::MOP ();
 use Moose;
 use Moose::Util::TypeConstraints;
 
-our $VERSION   = '0.13';
+our $VERSION   = '0.14';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 has 'errstr'   => ( is => 'rw', isa => 'Maybe[Str]' );
@@ -26,6 +26,7 @@ has 'known_supplier' => (
             'rediffmail.com' => 'Rediffmail',
             'aol.com'        => 'AOL',
             'indiatimes.com' => 'Indiatimes',
+            'lycos.com'      => 'Lycos',
             
             # cn
             '163.com'        => 'CN::163',
@@ -48,18 +49,18 @@ has 'known_supplier' => (
             'writeme.com'    => 'Mail',
             
             # hotmail
-            'hotmail.com'    => 'Hotmail',
-            'live.com'    => 'Hotmail',
-            'compaq.net'     => 'Hotmail',
-            'hotmail.co.jp'  => 'Hotmail',
-            'hotmail.co.uk'  => 'Hotmail',
-            'hotmail.de'     => 'Hotmail',
-            'hotmail.fr'     => 'Hotmail',
-            'hotmail.it'     => 'Hotmail',
+            'hotmail.com'       => 'Hotmail',
+            'live.com'          => 'Hotmail',
+            'compaq.net'        => 'Hotmail',
+            'hotmail.co.jp'     => 'Hotmail',
+            'hotmail.co.uk'     => 'Hotmail',
+            'hotmail.de'        => 'Hotmail',
+            'hotmail.fr'        => 'Hotmail',
+            'hotmail.it'        => 'Hotmail',
             'messengeruser.com' => 'Hotmail',
-            'msn.com'        => 'Hotmail',
-            'passport.com'   => 'Hotmail',
-            'webtv.net'      => 'Hotmail',
+            'msn.com'           => 'Hotmail',
+            'passport.com'      => 'Hotmail',
+            'webtv.net'         => 'Hotmail',
         }
     }
 );
@@ -204,6 +205,10 @@ L<WWW::Contact::Hotmail> By Fayland Lam
 =item Indiatimes
 
 L<WWW::Contact::Indiatimes> By Sachin Sebastian
+
+=item Lycos
+
+L<WWW::Contact::Lycos> By Sachin Sebastian
 
 =back
 

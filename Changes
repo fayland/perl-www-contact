@@ -1,4 +1,7 @@
 Revision history for WWW-Contact
+0.14    2008.10.28
+        added WWW::Contact::Lycos by Sachin Sebastian
+        
 0.13    2008.10.28
         added WWW::Contact::Indiatimes by Sachin Sebastian
         remove google.com check and wrong password check from test files.

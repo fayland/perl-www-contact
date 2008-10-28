@@ -1,9 +1,9 @@
-package WWW::Contact::Mail;
+package WWW::Contact::Lycos;
 
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.14';
+our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:SACHINJSK';
 
 has '+ua_class' => ( default => 'WWW::Mechanize::GZip' );
@@ -16,37 +16,36 @@ sub get_contacts {
     my @contacts;
     
     my $ua = $self->ua;
-    $self->debug("start get_contacts from Mail.com");
+    $self->debug("start get_contacts from lycos");
+    
+    # Get username from email.
+    $email =~ /(.*)@.*/;
+    my $username = $1;
     
     # get to login form
-    $self->get('http://www.mail.com') || return;
+    $self->get('http://www.lycos.com/') || return;
 
     $self->submit_form(
-        form_name => 'mailcom',
-        fields    => {
-            login    => $email,
-            password => $password,
-        },
+        form_number   => 2,
+        fields        => {
+                m_U  => $username,
+                m_P  => $password,
+            },
     ) || return;
     
     my $content = $ua->content();
-
-     if ($content =~ /Invalid username\/password/ig) {
+    if ($content =~ /password you provided don't match/ig) {
         $self->errstr('Wrong Username or Password');
         return;
     }
+
     $self->debug('Login OK');
-
-    $self->get("/scripts/addr/addressbook.cgi?showaddressbook=1") || return;
-    $ua->follow_link( text_regex => qr/Import\/Export/i );
-
-    $self->submit_form(
-        form_name => 'exportform'
-    ) || return;
+    
+    $self->get("http://mail.lycos.com/lycos/addrbook/ExportAddr.lycos?ptype=act&fileType=OUTLOOK");
 
     my $address_content = $ua->content();
+
     @contacts = get_contacts_from_csv($address_content);
-    
     return wantarray ? @contacts : \@contacts;
 }
 
@@ -54,7 +53,7 @@ sub get_contacts_from_csv {
     my ($csv) = shift;
     my @contacts;
  
-    # first_name, middle_name, last_name, nickname, e-mail.
+    # first_name, last_name, full_name, nickname, e-mail.
     my @lines = split(/\n/, $csv);
     shift @lines; # skip the first line
     foreach my $line (@lines) {
@@ -77,14 +76,14 @@ __END__
 
 =head1 NAME
 
-WWW::Contact::Mail - Get contacts from Mail.com
+WWW::Contact::Lycos - Get contacts from Lycos
 
 =head1 SYNOPSIS
 
     use WWW::Contact;
     
     my $wc       = WWW::Contact->new();
-    my @contacts = $wc->get_contacts('itsa@mail.com', 'password');
+    my @contacts = $wc->get_contacts('itsa@lycos.com', 'password');
     my $errstr   = $wc->errstr;
     if ($errstr) {
         die $errstr;
@@ -94,22 +93,7 @@ WWW::Contact::Mail - Get contacts from Mail.com
 
 =head1 DESCRIPTION
 
-get contacts from Mail.com. extends L<WWW::Contact::Base>
-
-Mail.com provides email addresses under different domain names. We currently support the most popular ones - 
-    mail.com,
-    email.com,
-    iname.com,
-    cheerful.com,
-    consultant.com,
-    europe.com,
-    mindless.com,
-    earthling.net,
-    myself.com,
-    post.com,
-    techie.com,
-    usa.com,
-    writeme.com
+get contacts from Lycos. extends L<WWW::Contact::Base>
 
 =head1 SEE ALSO
 

@@ -6,7 +6,7 @@ extends 'WWW::Contact::Base';
 use HTTP::Request::Common qw/POST/;
 use HTML::TokeParser::Simple;
 
-our $VERSION   = '0.13';
+our $VERSION   = '0.14';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {

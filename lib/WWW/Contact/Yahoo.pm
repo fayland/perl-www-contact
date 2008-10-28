@@ -3,7 +3,7 @@ package WWW::Contact::Yahoo;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.13';
+our $VERSION   = '0.14';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 has '+ua_class' => ( default => 'WWW::Mechanize::GZip' );

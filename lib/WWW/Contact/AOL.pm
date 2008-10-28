@@ -3,7 +3,7 @@ package WWW::Contact::AOL;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.13';
+our $VERSION   = '0.14';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
