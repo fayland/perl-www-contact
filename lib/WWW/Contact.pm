@@ -25,6 +25,7 @@ has 'known_supplier' => (
             'rocketmail.com' => 'Yahoo',
             'rediffmail.com' => 'Rediffmail',
             'aol.com'        => 'AOL',
+            'indiatimes.com' => 'Indiatimes',
             
             # cn
             '163.com'        => 'CN::163',
