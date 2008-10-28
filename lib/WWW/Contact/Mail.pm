@@ -3,7 +3,7 @@ package WWW::Contact::Mail;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.12';
+our $VERSION   = '0.13';
 our $AUTHORITY = 'cpan:SACHINJSK';
 
 has '+ua_class' => ( default => 'WWW::Mechanize::GZip' );

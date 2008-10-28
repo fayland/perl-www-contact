@@ -7,6 +7,7 @@ lib/WWW/Contact/Base.pm
 lib/WWW/Contact/CN/163.pm
 lib/WWW/Contact/Gmail.pm
 lib/WWW/Contact/Hotmail.pm
+lib/WWW/Contact/Indiatimes.pm
 lib/WWW/Contact/Mail.pm
 lib/WWW/Contact/Rediffmail.pm
 lib/WWW/Contact/Yahoo.pm
@@ -24,6 +25,7 @@ t/104-163.t
 t/105-aol.t
 t/106-mail.t
 t/107-hotmail.t
+t/108-indiatimes.t
 t/999-author.t
 t/lib/WWW/Contact/Unknown.pm
 t/pod.t

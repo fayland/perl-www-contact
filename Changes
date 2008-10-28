@@ -1,4 +1,10 @@
 Revision history for WWW-Contact
+0.13    2008.10.28
+        added WWW::Contact::Indiatimes by Sachin Sebastian
+        remove google.com check and wrong password check from test files.
+
+0.12    2008.10.27
+        Edited synopsis for all derived modules.
 
 0.11    2008.10.27
         no change
