@@ -201,6 +201,10 @@ L<WWW::Contact::Mail> By Sachin Sebastian
 
 L<WWW::Contact::Hotmail> By Fayland Lam
 
+=item Indiatimes
+
+L<WWW::Contact::Indiatimes> By Sachin Sebastian
+
 =back
 
 =head1 METHODS
