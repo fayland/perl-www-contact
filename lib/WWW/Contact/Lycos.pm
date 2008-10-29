@@ -53,7 +53,7 @@ sub get_contacts_from_csv {
     my ($csv) = shift;
     my @contacts;
  
-    # first_name, last_name, full_name, nickname, e-mail.
+    # first_name, middle_name, last_name, nickname, e-mail.
     my @lines = split(/\n/, $csv);
     shift @lines; # skip the first line
     foreach my $line (@lines) {
