@@ -65,9 +65,21 @@ has 'known_supplier' => (
     }
 );
 
+has 'social_network' => (
+    is  => 'rw',
+    isa => 'HashRef',
+    auto_deref => 1,
+    default => sub {
+        {
+            # Social networks.
+            'plaxo'    => 'Plaxo',
+        }
+    }
+);
+
 sub get_contacts {
     my $self = shift;
-    my ( $email, $password ) = @_;
+    my ( $email, $password, $social_network ) = @_;
     
     unless ( $email and $password ) {
         $self->errstr('Both email and password are required.');
@@ -82,9 +94,19 @@ sub get_contacts {
     my ( $username, $postfix ) = ( lc($1), lc($2) );
     
     # get supplier module
-    my $supplier = $self->get_supplier_by_email($email);
+    my $supplier;
+    if($social_network) {
+        $social_network = lc($social_network);
+        $supplier = $self->get_supplier_by_socialnetwork($social_network);
+    } else {
+        $supplier = $self->get_supplier_by_email($email);
+    }
     unless ($supplier) {
-        $self->errstr("$email is not supported yet.");
+        if($social_network) {
+            $self->errstr("$social_network is not supported yet.");
+        } else {
+            $self->errstr("$email is not supported yet.");
+        }
         return;
     }
     
@@ -135,6 +157,18 @@ sub get_supplier_by_email {
     return;
 }
 
+sub get_supplier_by_socialnetwork {
+    my ($self, $social_network) = @_;
+
+    my %social_supplier = $self->social_network;
+
+    if ( exists $social_supplier{ $social_network } ) {
+        return $social_supplier{ $social_network };
+    }
+
+    return;
+}
+
 sub register_supplier {
     my ($self, $pattern, $supplier) = @_;
 
@@ -157,6 +191,7 @@ WWW::Contact - Get contacts/addressbook from Web
 
     use WWW::Contact;
     
+    # Get contacts from email providers.
     my $wc       = WWW::Contact->new();
     my @contacts = $wc->get_contacts('fayland@gmail.com', 'password');
     my $errstr   = $wc->errstr;
@@ -165,6 +200,19 @@ WWW::Contact - Get contacts/addressbook from Web
     } else {
         print Dumper(\@contacts);
     }
+    
+    # Get contacts from social networks.(eg: Plaxo)
+    my $ws       = WWW::Contact->new();
+    # Note that the last argument for get_contacts() is mandatory,
+    # or else it will try to fetch contacts from gmail.com
+    my @contacts = $ws->get_contacts('itsa@gmail.com', 'password', 'plaxo');
+    my $errstr   = $ws->errstr;
+    if ($errstr) {
+        die $errstr; # like 'Wrong Username or Password'
+    } else {
+        print Dumper(\@contacts);
+    }
+    
 
 =head1 DESCRIPTION
 
@@ -210,6 +258,10 @@ L<WWW::Contact::Indiatimes> By Sachin Sebastian
 
 L<WWW::Contact::Lycos> By Sachin Sebastian
 
+=item Plaxo
+
+L<WWW::Contact::Plaxo> By Sachin Sebastian
+
 =back
 
 =head1 METHODS
@@ -230,9 +282,15 @@ get supplier by email.
     my $supplier = $wc->get_supplier_by_email('a@gmail.com'); # 'Gmail'
     my $supplier = $wc->get_supplier_by_email('a@a.com');     # 'Unknown'
 
+=head2 get_supplier_by_socialnetwork
+
+get supplier by social network name.
+
+    my $supplier = $wc->get_supplier_by_socialnetwork('plaxo'); # 'Plaxo'
+
 =head1 HOW TO WRITE YOUR OWN MODULE
 
-please read L<WWW::Contact::Base> and examples: L<WWW::Contact::Yahoo> and L<WWW::Contact::Gmail>
+please read L<WWW::Contact::Base> and examples: L<WWW::Contact::Yahoo> and L<WWW::Contact::Plaxo>
 
 Assuming we write a custom module as WWW::Contact::Unknown
 
@@ -248,7 +306,7 @@ Assuming we write a custom module as WWW::Contact::Unknown
         $self->errstr(undef);
         
         if ($email eq 'a@a.com' and $password ne 'a') {
-            $self->errstr('Wrong Password');
+            $self->errstr('Wrong Username or Password');
             return;
         }
         
