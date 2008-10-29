@@ -29,7 +29,7 @@ sub get_contacts {
     ) || return;
     my $content = $ua->content();
     if ($content =~ /=[\'\"]yregertxt/) {
-        $self->errstr('Wrong Password');
+        $self->errstr('Wrong Username or Password');
         return;
     }
     
