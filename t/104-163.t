@@ -19,7 +19,7 @@ my $wc = new WWW::Contact;
 
 my @contacts = $wc->get_contacts('fayland@163.com', 'pass');
 my $errstr = $wc->errstr;
-is($errstr, 'Wrong Password', 'get error with wrong password');
+is($errstr, 'Wrong Username or Password', 'get error with wrong password');
 is(scalar @contacts, 0, 'empty contact list');
 
 {
