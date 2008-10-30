@@ -6,8 +6,6 @@ extends 'WWW::Contact::Base';
 our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:SACHINJSK';
 
-has '+ua_class' => ( default => 'WWW::Mechanize::GZip' );
-
 sub get_contacts {
     my ($self, $email, $password) = @_;
 
