@@ -3,7 +3,7 @@ package WWW::Contact::Plaxo;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.01';
+our $VERSION   = '0.16';
 our $AUTHORITY = 'cpan:SACHINJSK';
 
 sub get_contacts {
@@ -101,7 +101,7 @@ get contacts from plaxo. extends L<WWW::Contact::Base>
 
 =head1 SEE ALSO
 
-L<WWW::Contact>, L<WWW::Contact::Base>, L<WWW::Mechanize::GZip>
+L<WWW::Contact>, L<WWW::Contact::Base>, L<WWW::Mechanize>
 
 =head1 AUTHOR
 

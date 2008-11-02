@@ -3,7 +3,7 @@ package WWW::Contact::Gmail;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.15';
+our $VERSION   = '0.16';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 use HTML::TokeParser::Simple;

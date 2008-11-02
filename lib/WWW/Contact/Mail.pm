@@ -3,7 +3,7 @@ package WWW::Contact::Mail;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.15';
+our $VERSION   = '0.16';
 our $AUTHORITY = 'cpan:SACHINJSK';
 
 sub get_contacts {
@@ -111,7 +111,7 @@ Mail.com provides email addresses under different domain names. We currently sup
 
 =head1 SEE ALSO
 
-L<WWW::Contact>, L<WWW::Contact::Base>, L<WWW::Mechanize::GZip>
+L<WWW::Contact>, L<WWW::Contact::Base>, L<WWW::Mechanize>
 
 =head1 AUTHOR
 
