@@ -40,11 +40,6 @@ sub get_contacts {
     $ua->follow_link( url => '?v=cl&pnl=a' );
     
     $content = $ua->content();
-    
-    open(my $fh, '>', 'E:\gmail.html');
-    print $fh $content;
-    close($fh);
-    
     @contacts = $self->get_contacts_from_html($content);
     
     return wantarray ? @contacts : \@contacts;
