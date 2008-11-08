@@ -3,7 +3,7 @@ package WWW::Contact::Gmail;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.16';
+our $VERSION   = '0.17';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 use HTML::TokeParser::Simple;
@@ -40,6 +40,11 @@ sub get_contacts {
     $ua->follow_link( url => '?v=cl&pnl=a' );
     
     $content = $ua->content();
+    
+    open(my $fh, '>', 'E:\gmail.html');
+    print $fh $content;
+    close($fh);
+    
     @contacts = $self->get_contacts_from_html($content);
     
     return wantarray ? @contacts : \@contacts;
@@ -72,15 +77,17 @@ sub get_contacts_from_html {
             }   
         }
         if ($start) {
-			if( $token->is_start_tag('td') ) {
+			if( scalar @names > scalar @emails and $token->is_start_tag('td') ) {
 				my $text = $p->peek(2);
 				if ($text =~ /(\S+\@\S+)/) {
 					push @emails, $1;
+				} else {
+				    pop @names; # remove last name for NoEmail
 				}
 			}
         }
     }
-    
+
     my @contacts;
     foreach my $i (0 .. $#emails) {
         push @contacts, {
