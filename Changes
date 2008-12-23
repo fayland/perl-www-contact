@@ -1,5 +1,8 @@
 Revision history for WWW-Contact
 
+0.18    2008.12.23
+        add Moose '0.57' as deps (VERSION added)
+
 0.17    2008.11.08
         fix "Gmail Contacts with no email cause incorrect matchup" (RT 40756)
 
