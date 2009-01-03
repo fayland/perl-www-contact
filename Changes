@@ -1,5 +1,9 @@
 Revision history for WWW-Contact
 
+0.19    2009.01.03
+        no code change
+        try to fix CPAN install
+
 0.18    2008.12.23
         add Moose '0.57' as deps (VERSION added)
 

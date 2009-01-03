@@ -4,7 +4,7 @@ use Class::MOP ();
 use Moose;
 use Moose::Util::TypeConstraints;
 
-our $VERSION   = '0.18';
+our $VERSION   = '0.19';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 has 'errstr'   => ( is => 'rw', isa => 'Maybe[Str]' );
