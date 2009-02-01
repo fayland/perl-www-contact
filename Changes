@@ -1,5 +1,10 @@
 Revision history for WWW-Contact
 
+0.20    2009.02.01
+        add Hotmail/Gmail into social_network (RT 42924)
+        fix Hotmail whacky results by David Moreno (RT 42925)
+        fix Hotmail "You spoke, Hotmail listened" bug by FAYLAND
+
 0.19    2009.01.03
         no code change
         try to fix CPAN install

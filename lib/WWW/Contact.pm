@@ -4,7 +4,7 @@ use Class::MOP ();
 use Moose;
 use Moose::Util::TypeConstraints;
 
-our $VERSION   = '0.19';
+our $VERSION   = '0.20';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 has 'errstr'   => ( is => 'rw', isa => 'Maybe[Str]' );
@@ -73,6 +73,8 @@ has 'social_network' => (
         {
             # Social networks.
             'plaxo'    => 'Plaxo',
+            'Hotmail'  => 'Hotmail',
+            'Gmail'    => 'Gmail',
         }
     }
 );

@@ -6,7 +6,7 @@ extends 'WWW::Contact::Base';
 use HTTP::Request::Common qw/POST/;
 use HTML::TokeParser::Simple;
 
-our $VERSION   = '0.16';
+our $VERSION   = '0.20';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
@@ -71,6 +71,13 @@ sub get_contacts {
         $self->get( $url ) || return;
     }
     
+    # You spoke, Hotmail listened
+    if ( $ua->content =~ /MessageAtLoginForm/ ) {
+        $self->submit_form(
+            form_name => 'MessageAtLoginForm',
+        ) || return;
+    }
+    
     $self->get('/mail/PrintShell.aspx?type=contact') || return;
     
     @contacts = $self->get_contacts_from_html( $ua->content );
@@ -90,7 +97,14 @@ sub get_contacts_from_html {
                 if ($class and $class eq 'cDisplayName') {
                     my $name = $p->peek(1);
                     $name =~ s/(^\s+|\s+$)//isg;
+                    $name =~ s/\x{200e}$//;
                     push @names, $name;
+                } elsif( $class and $class eq 'cCol1' ) {
+                    $p->get_tag; # this "should" be table
+                    $tag = $p->get_tag;
+                    unless ($tag->is_start_tag('tr')) {
+                        push @emails, undef;
+                    }
                 }
             } elsif ( $token->is_start_tag('td') ) {
                 my $class = $token->get_attr('class');
@@ -99,7 +113,7 @@ sub get_contacts_from_html {
                         my $email = $p->peek(1);
                         $email =~ s/(^\s+|\s+$)//isg;
                         $email =~ s/\&\#64\;/\@/;
-                        push @emails, $email;
+                        push @emails, $email if $email =~ /\@/;
                     }
                 }
             }
