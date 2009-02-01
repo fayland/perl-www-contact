@@ -1,6 +1,6 @@
 ---
 name: WWW-Contact
-version: 0.19
+version: 0.20
 author:
   - 'Fayland Lam <fayland@gmail.com>'
 abstract: Get contacts/addressbook from Web
@@ -17,7 +17,7 @@ build_requires:
 provides:
   WWW::Contact:
     file: lib/WWW/Contact.pm
-    version: 0.19
+    version: 0.20
   WWW::Contact::AOL:
     file: lib/WWW/Contact/AOL.pm
     version: 0.16
@@ -32,7 +32,7 @@ provides:
     version: 0.17
   WWW::Contact::Hotmail:
     file: lib/WWW/Contact/Hotmail.pm
-    version: 0.16
+    version: 0.20
   WWW::Contact::Indiatimes:
     file: lib/WWW/Contact/Indiatimes.pm
     version: 0.16
