@@ -1,5 +1,8 @@
 Revision history for WWW-Contact
 
+0.21    2009.03.23
+        fix Hotmail
+
 0.20    2009.02.01
         add Hotmail/Gmail into social_network (RT 42924)
         fix Hotmail whacky results by David Moreno (RT 42925)

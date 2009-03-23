@@ -12,28 +12,10 @@ BEGIN {
     unless ( $ENV{TEST_HOTMAIL} and $ENV{TEST_HOTMAIL_PASS} ) {
         plan skip_all => 'set $ENV{TEST_HOTMAIL} and $ENV{TEST_HOTMAIL_PASS} to test';
     }
-    plan tests => 6;
+    plan tests => 4;
 }
 
 my $wc = new WWW::Contact::Hotmail->new();
-
-# test get_contacts_from_html
-open(my $fh, '<', "$Bin/samples/hotmail.html");
-local $/;
-my $content = <$fh>;
-close($fh);
-my @contacts2 = $wc->get_contacts_from_html( $content );
-is(scalar @contacts2, 2);
-is_deeply(\@contacts2, [
-    {
-        name => 'fayland xxx',
-        email => 'xxxx@gmail.com'
-    },
-    {
-        name => 'fayland lam',
-        email => 'zzz@gmail.com'
-    }
-]);
 
 my @contacts = $wc->get_contacts('cpan@hotmail.com', 'pass');
 my $errstr = $wc->errstr;

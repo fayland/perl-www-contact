@@ -6,7 +6,7 @@ extends 'WWW::Contact::Base';
 use HTTP::Request::Common qw/POST/;
 use HTML::TokeParser::Simple;
 
-our $VERSION   = '0.20';
+our $VERSION   = '0.21';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
@@ -77,9 +77,12 @@ sub get_contacts {
             form_name => 'MessageAtLoginForm',
         ) || return;
     }
-    
-    $self->get('/mail/PrintShell.aspx?type=contact') || return;
-    
+
+    # TodayDefault, Our latest improvements
+    my ( $maildomain ) = ( $ua->content =~ /base\s+href\=\"((.*?)\.mail\.live\.com)/ ); # <base href="http://co118w.col118.mail.live.com/" />
+    my ( $uid ) = ( $ua->content =~ /n\&\#61\;(\d+)/ ); # n&#61;
+    $self->get("$maildomain/mail/ContactMainLight.aspx?n=$uid") || return;
+
     @contacts = $self->get_contacts_from_html( $ua->content );
     
     return wantarray ? @contacts : \@contacts;
@@ -88,46 +91,23 @@ sub get_contacts {
 sub get_contacts_from_html {
     my ($self, $content) = @_;
     
-    my ( @names, @emails );
-    my $p = HTML::TokeParser::Simple->new( string => $content );
-    while ( my $token = $p->get_token ) {
-        if ( my $tag = $token->get_tag ) {
-            if ( $token->is_start_tag('div') ) {
-                my $class = $token->get_attr('class');
-                if ($class and $class eq 'cDisplayName') {
-                    my $name = $p->peek(1);
-                    $name =~ s/(^\s+|\s+$)//isg;
-                    $name =~ s/\x{200e}$//;
-                    push @names, $name;
-                } elsif( $class and $class eq 'cCol1' ) {
-                    $p->get_tag; # this "should" be table
-                    $tag = $p->get_tag;
-                    unless ($tag->is_start_tag('tr')) {
-                        push @emails, undef;
-                    }
-                }
-            } elsif ( $token->is_start_tag('td') ) {
-                my $class = $token->get_attr('class');
-                if ( $class and $class eq 'Value' ) {
-                    if (scalar @names != scalar @emails) {
-                        my $email = $p->peek(1);
-                        $email =~ s/(^\s+|\s+$)//isg;
-                        $email =~ s/\&\#64\;/\@/;
-                        push @emails, $email if $email =~ /\@/;
-                    }
-                }
-            }
-        }
-    }
-
     my @contacts;
-    foreach my $i (0 .. $#emails) {
+    
+    # cxp_ic_control_data
+    my ( $data ) = ( $content =~ /cxp_ic_control_data(.*?)\}/s );
+    my @lines = split(/\n/, $data);
+    foreach my $line ( @lines ) {
+        # ICc0:['0ea61975fb7fb339','1',['sm','si','ct'],'fayland lam','55ff0c7e-2c36-41cc-aa12-fb1db452f171','1055559157186278201','fayland\x40gmail.com','fayland\x40gmail.com','','1',[['Send e-mail','','','submitToCompose\x28\x2755ff0c7e-2c36-41cc-aa12-fb1db452f171\x27, \x27EditMessageLight.aspx\x3fn\x3d1423059530\x27\x29'],['Edit contact info','ContactEditLight.aspx\x3fContactID\x3d55ff0c7e-2c36-41cc-aa12-fb1db452f171\x26n\x3d1980367392','','','_self']]],
+        my ( $email ) = ( $line =~ /\'([^\']+\\x40(.*?))\'/ );
+        next unless $email;
+        $email =~ s/\\x40/\@/;
+        my ( $name ) = ( $line =~ /\]\,\s*\'([^\']+)\'/ );
         push @contacts, {
-            name  => $names[$i],
-            email => $emails[$i]
+            email => $email,
+            name  => $name,
         };
     }
-    
+
     return @contacts;
 }
 
