@@ -2,7 +2,6 @@ package WWW::Contact;
 
 use Class::MOP ();
 use Moose;
-use Moose::Util::TypeConstraints;
 
 our $VERSION   = '0.21';
 our $AUTHORITY = 'cpan:FAYLAND';
@@ -178,7 +177,6 @@ sub register_supplier {
 }
 
 no Moose;
-no Moose::Util::TypeConstraints;
 
 __PACKAGE__->meta->make_immutable;
 
