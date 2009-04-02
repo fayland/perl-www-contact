@@ -1,5 +1,8 @@
 Revision history for WWW-Contact
 
+0.22    2009.04.02
+        fix Gmail contact name bug (RT 44729)
+
 0.21    2009.03.23
         fix Hotmail
 

@@ -3,8 +3,10 @@ package WWW::Contact::Gmail;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.17';
+our $VERSION   = '0.22';
 our $AUTHORITY = 'cpan:FAYLAND';
+
+has '+ua_class' => ( default => 'WWW::Mechanize::GZip' );
 
 use HTML::TokeParser::Simple;
 
@@ -40,6 +42,7 @@ sub get_contacts {
     $ua->follow_link( url => '?v=cl&pnl=a' );
     
     $content = $ua->content();
+    $self->debug_to_file('E:/gg.txt');
     @contacts = $self->get_contacts_from_html($content);
     
     return wantarray ? @contacts : \@contacts;
@@ -64,8 +67,9 @@ sub get_contacts_from_html {
                 }
             }
             $start = 0 if ($tag eq 'table');
-            if ($start) {
-                if ( $token->is_start_tag('b') ) {
+            if ($start and $tag eq 'a') { # <a href="?v=ct&ct_id=0">fayland</a>
+                my $href = $token->get_attr('href');
+                if ( $href and $href =~ /v\=ct\&ct_id\=/ ) {
                     my $name = $p->peek(1);
                     push @names, $name;
                 }
