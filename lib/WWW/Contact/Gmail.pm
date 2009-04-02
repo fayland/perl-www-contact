@@ -42,7 +42,6 @@ sub get_contacts {
     $ua->follow_link( url => '?v=cl&pnl=a' );
     
     $content = $ua->content();
-    $self->debug_to_file('E:/gg.txt');
     @contacts = $self->get_contacts_from_html($content);
     
     return wantarray ? @contacts : \@contacts;
