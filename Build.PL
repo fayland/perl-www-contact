@@ -17,6 +17,11 @@ my $builder = Module::Build->new(
     },
     add_to_cleanup      => [ 'WWW-Contact-*' ],
     create_makefile_pl => 'traditional',
+    meta_merge     => {
+        resources => {
+            homepage => 'http://github.com/fayland/perl-www-contact/tree/master',
+        }
+    },
 );
 
 $builder->create_build_script();
