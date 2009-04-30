@@ -4,6 +4,7 @@ author.txt$
 \bRCS\b
 \bCVS\b
 ,v$
+\B\.git\b
 \B\.svn\b
 \B\.cvsignore$
 
