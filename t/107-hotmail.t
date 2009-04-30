@@ -15,7 +15,7 @@ BEGIN {
     plan tests => 4;
 }
 
-my $wc = new WWW::Contact::Hotmail->new();
+my $wc = WWW::Contact::Hotmail->new();
 
 my @contacts = $wc->get_contacts('cpan@hotmail.com', 'pass');
 my $errstr = $wc->errstr;

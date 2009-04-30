@@ -15,7 +15,7 @@ BEGIN {
     plan tests => 4;
 }
 
-my $wc = new WWW::Contact::Indiatimes->new();
+my $wc = WWW::Contact::Indiatimes->new();
 
 my @contacts = $wc->get_contacts('cpan@indiatimes.com', 'letmein');
 my $errstr = $wc->errstr;

@@ -24,7 +24,7 @@ my @tests = split(/\r?\n/, $test);
 
 plan tests => scalar @tests * 2;
 
-my $wc = new WWW::Contact;
+my $wc = WWW::Contact->new();
 
 foreach my $t ( @tests ) {
     my ( $email, $pass ) = ( $t =~ /(\S+)\s+(\S+)/ );

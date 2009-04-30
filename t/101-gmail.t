@@ -5,7 +5,7 @@ use warnings;
 use FindBin qw/$Bin/;
 use lib "$Bin/lib";
 use Test::More;
-use WWW::Contact::Gmail;
+use WWW::Contact;
 use Data::Dumper;
 
 # to avoid error like
@@ -37,7 +37,7 @@ BEGIN {
     plan tests => 8;
 }
 
-my $wc = new WWW::Contact::Gmail;
+my $wc = WWW::Contact->new();
 
 my @contacts = $wc->get_contacts('fayland@gmail.com', 'pass');
 

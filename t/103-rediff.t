@@ -15,7 +15,7 @@ BEGIN {
     plan tests => 4;
 }
 
-my $wc = new WWW::Contact::Rediffmail->new();
+my $wc = WWW::Contact::Rediffmail->new();
 
 my @contacts = $wc->get_contacts('cpan@rediffmail.com', 'letmein');
 my $errstr = $wc->errstr;

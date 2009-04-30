@@ -15,7 +15,7 @@ BEGIN {
     plan tests => 4;
 }
 
-my $wc = new WWW::Contact::Plaxo->new();
+my $wc = WWW::Contact::Plaxo->new();
 
 my @contacts = $wc->get_contacts('cpan@gmail.com', 'letmein', 'plaxo');
 my $errstr = $wc->errstr;

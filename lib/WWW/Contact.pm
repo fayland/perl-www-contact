@@ -324,7 +324,7 @@ Assuming we write a custom module as WWW::Contact::Unknown
 
 We can use it within WWW::Contact
 
-    my $wc = new WWW::Contact;
+    my $wc = WWW::Contact->new();
     $wc->register_supplier( qr/\@a\.com$/, 'Unknown' );
     # or
     # $wc->register_supplier( 'a.com', 'Unknown' );

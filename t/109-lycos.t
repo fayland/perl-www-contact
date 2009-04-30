@@ -15,7 +15,7 @@ BEGIN {
     plan tests => 4;
 }
 
-my $wc = new WWW::Contact::Lycos->new();
+my $wc = WWW::Contact::Lycos->new();
 
 my @contacts = $wc->get_contacts('cpan@lycos.com', 'letmein');
 my $errstr = $wc->errstr;

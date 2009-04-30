@@ -7,7 +7,7 @@ use lib "$Bin/lib";
 use Test::More tests => 10;
 use WWW::Contact;
 
-my $wc = new WWW::Contact;
+my $wc = WWW::Contact->new();
 
 my $supplier = $wc->get_supplier_by_email('fayland@gmail.com');
 is($supplier, 'Gmail');

@@ -7,7 +7,7 @@ use lib "$Bin/lib";
 use Test::More tests => 8;
 use WWW::Contact;
 
-my $wc = new WWW::Contact;
+my $wc = WWW::Contact->new();
 
 $wc->register_supplier( qr/\@a\.com$/, 'Unknown' );
 $wc->register_supplier( 'b.com', 'Unknown' );
@@ -22,7 +22,7 @@ $errstr = $wc->errstr;
 is($errstr, undef, 'no error with password c');
 is(scalar @contacts, 2, 'get 2 contact list');
 
-my $wc2 = new WWW::Contact::Unknown;
+my $wc2 = WWW::Contact::Unknown->new();
 @contacts = $wc2->get_contacts('a@a.com', 'b');
 $errstr = $wc2->errstr;
 is($errstr, 'error!', 'get error with password b');

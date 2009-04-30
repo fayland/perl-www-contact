@@ -33,7 +33,7 @@ use Email::Simple::Creator;
 my $is_broken = 0;
 my $body = "Test WWW::Contact $WWW::Contact::VERSION\n\n";
 
-my $wc = new WWW::Contact;
+my $wc = WWW::Contact->new();
 
 open(my $fh, '<', "$Bin/test_accounts.txt") or die $!;
 local $/;

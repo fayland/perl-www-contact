@@ -15,7 +15,7 @@ BEGIN {
     plan tests => 4;
 }
 
-my $wc = new WWW::Contact;
+my $wc = WWW::Contact->new();
 
 my @contacts = $wc->get_contacts('fayland@163.com', 'pass');
 my $errstr = $wc->errstr;
