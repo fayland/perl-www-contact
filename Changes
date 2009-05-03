@@ -1,5 +1,8 @@
 Revision history for WWW-Contact
 
+0.23    2009.05.04
+        add Google Contacts API implemention
+
 0.22    2009.04.02
         fix Gmail contact name bug (RT 44729)
 

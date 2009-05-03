@@ -9,11 +9,13 @@ my $builder = Module::Build->new(
     dist_version_from   => 'lib/WWW/Contact.pm',
     build_requires => {
         'Test::More' => 0,
-        'Moose'      => '0.57',
+        'Moose'      => '0.77',
         'WWW::Mechanize' => 0,
         'WWW::Mechanize::GZip' => 0,
         'HTML::TokeParser::Simple' => 0,
         'Crypt::SSLeay'  => 0, # https
+        'Net::Google::AuthSub' => 0,
+        'JSON::XS' => 0,
     },
     add_to_cleanup      => [ 'WWW-Contact-*' ],
     create_makefile_pl => 'traditional',
