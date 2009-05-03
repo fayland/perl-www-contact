@@ -1,23 +1,26 @@
 ---
 name: WWW-Contact
-version: 0.22
+version: 0.23
 author:
   - 'Fayland Lam <fayland@gmail.com>'
 abstract: Get contacts/addressbook from Web
 license: perl
 resources:
-  license: ~
+  homepage: http://github.com/fayland/perl-www-contact/tree/master
+  license: http://dev.perl.org/licenses/
 build_requires:
   Crypt::SSLeay: 0
   HTML::TokeParser::Simple: 0
-  Moose: 0.57
+  JSON::XS: 0
+  Moose: 0.77
+  Net::Google::AuthSub: 0
   Test::More: 0
   WWW::Mechanize: 0
   WWW::Mechanize::GZip: 0
 provides:
   WWW::Contact:
     file: lib/WWW/Contact.pm
-    version: 0.22
+    version: 0.23
   WWW::Contact::AOL:
     file: lib/WWW/Contact/AOL.pm
     version: 0.16
@@ -30,6 +33,9 @@ provides:
   WWW::Contact::Gmail:
     file: lib/WWW/Contact/Gmail.pm
     version: 0.22
+  WWW::Contact::GoogleContactsAPI:
+    file: lib/WWW/Contact/GoogleContactsAPI.pm
+    version: 0.23
   WWW::Contact::Hotmail:
     file: lib/WWW/Contact/Hotmail.pm
     version: 0.21

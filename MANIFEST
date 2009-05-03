@@ -1,11 +1,13 @@
 Build.PL
 Changes
 examples/cron_to_test.pl
+examples/test.pl
 lib/WWW/Contact.pm
 lib/WWW/Contact/AOL.pm
 lib/WWW/Contact/Base.pm
 lib/WWW/Contact/CN/163.pm
 lib/WWW/Contact/Gmail.pm
+lib/WWW/Contact/GoogleContactsAPI.pm
 lib/WWW/Contact/Hotmail.pm
 lib/WWW/Contact/Indiatimes.pm
 lib/WWW/Contact/Lycos.pm

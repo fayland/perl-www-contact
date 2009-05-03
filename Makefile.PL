@@ -7,7 +7,9 @@ WriteMakefile
           'PREREQ_PM' => {
                            'Crypt::SSLeay' => '0',
                            'HTML::TokeParser::Simple' => '0',
-                           'Moose' => '0.57',
+                           'JSON::XS' => '0',
+                           'Moose' => '0.77',
+                           'Net::Google::AuthSub' => '0',
                            'Test::More' => '0',
                            'WWW::Mechanize' => '0',
                            'WWW::Mechanize::GZip' => '0'
