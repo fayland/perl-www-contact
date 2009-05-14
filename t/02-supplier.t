@@ -10,7 +10,7 @@ use WWW::Contact;
 my $wc = WWW::Contact->new();
 
 my $supplier = $wc->get_supplier_by_email('fayland@gmail.com');
-is($supplier, 'Gmail');
+is($supplier, 'GoogleContactsAPI');
 
 $supplier = $wc->get_supplier_by_email('fayland@yahoo.com');
 is($supplier, 'Yahoo');
