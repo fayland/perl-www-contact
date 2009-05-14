@@ -19,7 +19,7 @@ has 'known_supplier' => (
     auto_deref => 1,
     default => sub {
         {
-            'gmail.com'      => 'Gmail',
+            'gmail.com'      => 'GoogleContactsAPI',
             'ymail.com'      => 'Yahoo',
             'rocketmail.com' => 'Yahoo',
             'rediffmail.com' => 'Rediffmail',
@@ -60,6 +60,12 @@ has 'known_supplier' => (
             'msn.com'           => 'Hotmail',
             'passport.com'      => 'Hotmail',
             'webtv.net'         => 'Hotmail',
+
+            # bg
+            'abv.bg'            => 'BG::Abv',
+            'gbg.bg'            => 'BG::Abv',
+            'gyuvectch.bg'      => 'BG::Abv',
+            'mail.bg'           => 'BG::Mail',
         }
     }
 );
@@ -73,7 +79,7 @@ has 'social_network' => (
             # Social networks.
             'plaxo'    => 'Plaxo',
             'Hotmail'  => 'Hotmail',
-            'Gmail'    => 'Gmail',
+            'Gmail'    => 'Gmail', # YYY? use GoogleContactsAPI?
         }
     }
 );
@@ -224,7 +230,7 @@ Get Contacts/AddressBook from public websites.
 
 =item Gmail
 
-L<WWW::Contact::Gmail> By Fayland Lam
+L<WWW::Contact::Gmail> By Fayland Lam, DEPERCATED for L<WWW::Contact::GoogleContactsAPI>
 
 =item Yahoo! Mail
 
@@ -266,6 +272,14 @@ L<WWW::Contact::Plaxo> By Sachin Sebastian
 
 L<WWW::Contact::GoogleContactsAPI> By Fayland Lam, using Google Contacts Data API
 
+=item abv.bg
+
+L<WWW::Contact::BG::Abv> By Dimitar Petrov
+
+=item mail.bg
+
+L<WWW::Contact::BG::Mail> By Dimitar Petrov
+
 =back
 
 =head1 METHODS
@@ -283,7 +297,7 @@ The first arg is a Regexp or domain from email postfix. The second arg is the ac
 
 get supplier by email.
 
-    my $supplier = $wc->get_supplier_by_email('a@gmail.com'); # 'Gmail'
+    my $supplier = $wc->get_supplier_by_email('a@gmail.com'); # 'GoogleContactsAPI'
     my $supplier = $wc->get_supplier_by_email('a@a.com');     # 'Unknown'
 
 =head2 get_supplier_by_socialnetwork

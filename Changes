@@ -1,5 +1,10 @@
 Revision history for WWW-Contact
 
+0.24    2009.05.14
+        make Gmail DEPERCATED, use GoogleContactsAPI
+        L<WWW::Contact::BG::Abv> By Dimitar Petrov
+        L<WWW::Contact::BG::Mail> By Dimitar Petrov
+
 0.23    2009.05.04
         add Google Contacts API implemention
 

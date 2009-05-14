@@ -73,7 +73,6 @@ WWW::Contact::GoogleContactsAPI - Get contacts/addressbook by Google Contacts Da
     use WWW::Contact;
     
     my $wc = WWW::Contact->new();
-    $wc->known_supplier->{'gmail.com'} = 'GoogleContactsAPI';
     my @contacts = $wc->get_contacts('itsa@gmail.com', 'password');
     my $errstr   = $wc->errstr;
     if ($errstr) {

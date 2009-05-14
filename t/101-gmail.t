@@ -34,55 +34,12 @@ BEGIN {
     unless ( $ENV{TEST_GMAIL} and $ENV{TEST_GMAIL_PASS} ) {
         plan skip_all => 'set $ENV{TEST_GMAIL} and $ENV{TEST_GMAIL_PASS} to test';
     }
-    plan tests => 8;
+    plan tests => 4;
 }
 
 my $wc = WWW::Contact->new();
 
 my @contacts = $wc->get_contacts('fayland@gmail.com', 'pass');
-
-# test get_contacts_from_html
-open(my $fh, '<', "$Bin/samples/gmail.html");
-local $/;
-my $content = <$fh>;
-close($fh);
-my @contacts2 = $wc->get_contacts_from_html( $content );
-is(scalar @contacts2, 3);
-is_deeply(\@contacts2, [
-    {
-        name => 'fayland',
-        email => 'yyyy@gmail.com'
-    },
-    {
-        name => 'mailman',
-        email => 'mailman@pm.org'
-    },
-    {
-        name => 'support',
-        email => 'support@pm.org'
-    }
-]);
-open($fh, '<', "$Bin/samples/gmail_NoEmail.html");
-local $/;
-$content = <$fh>;
-close($fh);
-@contacts2 = $wc->get_contacts_from_html( $content );
-is(scalar @contacts2, 3);
-is_deeply(\@contacts2, [
-    {
-        name => 'fayland',
-        email => 'yyyy@gmail.com'
-    },
-    {
-        name => 'mailman',
-        email => 'mailman@pm.org'
-    },
-    {
-        name => 'support',
-        email => 'support@pm.org'
-    }
-]);
-
 my $errstr = $wc->errstr;
 is($errstr, 'Wrong Username or Password', 'get error with wrong password');
 is(scalar @contacts, 0, 'empty contact list');

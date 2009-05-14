@@ -3,7 +3,7 @@ package WWW::Contact::Gmail;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.22';
+our $VERSION   = '0.24';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 has '+ua_class' => ( default => 'WWW::Mechanize::GZip' );
@@ -105,13 +105,14 @@ __END__
 
 =head1 NAME
 
-WWW::Contact::Gmail - Get contacts/addressbook from Gmail
+WWW::Contact::Gmail - Get contacts/addressbook from Gmail (DEPERCATED for GoogleContactsAPI)
 
 =head1 SYNOPSIS
 
     use WWW::Contact;
     
     my $wc       = WWW::Contact->new();
+    $wc->known_supplier->{'gmail.com'} = 'Gmail';
     my @contacts = $wc->get_contacts('itsa@gmail.com', 'password');
     my $errstr   = $wc->errstr;
     if ($errstr) {
@@ -122,7 +123,7 @@ WWW::Contact::Gmail - Get contacts/addressbook from Gmail
 
 =head1 DESCRIPTION
 
-get contacts from GMail. extends L<WWW::Contact::Base>
+get contacts from GMail. extends L<WWW::Contact::Base>, replaced by L<WWW::Contact::GoogleContactsAPI>
 
 =head1 SEE ALSO
 
