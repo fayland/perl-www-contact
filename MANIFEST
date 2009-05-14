@@ -5,6 +5,8 @@ examples/test.pl
 lib/WWW/Contact.pm
 lib/WWW/Contact/AOL.pm
 lib/WWW/Contact/Base.pm
+lib/WWW/Contact/BG/Abv.pm
+lib/WWW/Contact/BG/Mail.pm
 lib/WWW/Contact/CN/163.pm
 lib/WWW/Contact/Gmail.pm
 lib/WWW/Contact/GoogleContactsAPI.pm
@@ -35,5 +37,3 @@ t/110-plaxo.t
 t/999-author.t
 t/lib/WWW/Contact/Unknown.pm
 t/pod.t
-t/samples/gmail.html
-t/samples/gmail_NoEmail.html
