@@ -1,5 +1,8 @@
 Revision history for WWW-Contact
 
+0.25
+        add 'use Data::Dumper;' in POD (thanks to oalders, http://annocpan.org/~FAYLAND/WWW-Contact-0.24/lib/WWW/Contact/GoogleContactsAPI.pm#note_2307)
+
 0.24    2009.05.14
         make Gmail DEPERCATED, use GoogleContactsAPI
         L<WWW::Contact::BG::Abv> By Dimitar Petrov
