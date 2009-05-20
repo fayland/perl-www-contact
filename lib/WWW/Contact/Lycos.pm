@@ -79,6 +79,7 @@ WWW::Contact::Lycos - Get contacts from Lycos
 =head1 SYNOPSIS
 
     use WWW::Contact;
+    use Data::Dumper;
     
     my $wc       = WWW::Contact->new();
     my @contacts = $wc->get_contacts('itsa@lycos.com', 'password');

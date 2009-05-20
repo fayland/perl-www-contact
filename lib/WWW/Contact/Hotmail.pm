@@ -124,6 +124,7 @@ WWW::Contact::Hotmail - Get contacts/addressbook from Hotmail/Live Mail
 =head1 SYNOPSIS
 
     use WWW::Contact;
+    use Data::Dumper;
     
     my $wc       = WWW::Contact->new();
     my @contacts = $wc->get_contacts('itsa@hotmail.com', 'password');

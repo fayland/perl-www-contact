@@ -93,6 +93,7 @@ WWW::Contact::Rediffmail - Get contacts from Rediffmail
 =head1 SYNOPSIS
 
     use WWW::Contact;
+    use Data::Dumper;
     
     my $wc       = WWW::Contact->new();
     my @contacts = $wc->get_contacts('itsa@rediffmail.com', 'password');

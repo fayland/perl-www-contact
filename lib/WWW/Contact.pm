@@ -196,6 +196,7 @@ WWW::Contact - Get contacts/addressbook from Web
 =head1 SYNOPSIS
 
     use WWW::Contact;
+    use Data::Dumper;
     
     # Get contacts from email providers.
     my $wc       = WWW::Contact->new();

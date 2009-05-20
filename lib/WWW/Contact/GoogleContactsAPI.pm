@@ -71,6 +71,7 @@ WWW::Contact::GoogleContactsAPI - Get contacts/addressbook by Google Contacts Da
 =head1 SYNOPSIS
 
     use WWW::Contact;
+    use Data::Dumper;
     
     my $wc = WWW::Contact->new();
     my @contacts = $wc->get_contacts('itsa@gmail.com', 'password');

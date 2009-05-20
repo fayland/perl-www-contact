@@ -80,6 +80,7 @@ WWW::Contact::Mail - Get contacts from Mail.com
 =head1 SYNOPSIS
 
     use WWW::Contact;
+    use Data::Dumper;
     
     my $wc       = WWW::Contact->new();
     my @contacts = $wc->get_contacts('itsa@mail.com', 'password');

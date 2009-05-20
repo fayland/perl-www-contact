@@ -110,6 +110,7 @@ WWW::Contact::Gmail - Get contacts/addressbook from Gmail (DEPERCATED for Google
 =head1 SYNOPSIS
 
     use WWW::Contact;
+    use Data::Dumper;
     
     my $wc       = WWW::Contact->new();
     $wc->known_supplier->{'gmail.com'} = 'Gmail';

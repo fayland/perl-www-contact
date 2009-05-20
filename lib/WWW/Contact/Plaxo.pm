@@ -83,6 +83,7 @@ WWW::Contact::Plaxo - Get contacts from Plaxo
 =head1 SYNOPSIS
 
     use WWW::Contact;
+    use Data::Dumper;
     
     my $wc       = WWW::Contact->new();
     # Note that the last argument for get_contacts is mandatory,

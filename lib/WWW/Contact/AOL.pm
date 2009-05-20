@@ -119,6 +119,7 @@ WWW::Contact::AOL - Get contacts/addressbook from AOL Mail
 =head1 SYNOPSIS
 
     use WWW::Contact;
+    use Data::Dumper;
     
     my $wc       = WWW::Contact->new();
     my @contacts = $wc->get_contacts('itsa@aol.com', 'password');
