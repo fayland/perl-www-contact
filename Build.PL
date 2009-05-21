@@ -17,6 +17,7 @@ my $builder = Module::Build->new(
         'Net::Google::AuthSub' => 0,
         'JSON::XS' => 0,
         'Text::vCard::Addressbook' => 0,
+        'HTML::Entities' => 0,
     },
     add_to_cleanup      => [ 'WWW-Contact-*' ],
     create_makefile_pl => 'traditional',
