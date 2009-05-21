@@ -1,6 +1,6 @@
 ---
 name: WWW-Contact
-version: 0.24
+version: 0.25
 author:
   - 'Fayland Lam <fayland@gmail.com>'
 abstract: Get contacts/addressbook from Web
@@ -10,6 +10,7 @@ resources:
   license: http://dev.perl.org/licenses/
 build_requires:
   Crypt::SSLeay: 0
+  HTML::Entities: 0
   HTML::TokeParser::Simple: 0
   JSON::XS: 0
   Moose: 0.77
@@ -21,7 +22,7 @@ build_requires:
 provides:
   WWW::Contact:
     file: lib/WWW/Contact.pm
-    version: 0.24
+    version: 0.25
   WWW::Contact::AOL:
     file: lib/WWW/Contact/AOL.pm
     version: 0.16
@@ -45,7 +46,7 @@ provides:
     version: 0.23
   WWW::Contact::Hotmail:
     file: lib/WWW/Contact/Hotmail.pm
-    version: 0.21
+    version: 0.25
   WWW::Contact::Indiatimes:
     file: lib/WWW/Contact/Indiatimes.pm
     version: 0.16
