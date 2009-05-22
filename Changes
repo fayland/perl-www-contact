@@ -1,5 +1,9 @@
 Revision history for WWW-Contact
 
+0.26    2009.05.22
+        Funky encoding of some non-alphanumberic chars in Hotmail names fix
+            by Mark Jubenville (RT 46280)
+
 0.25    2009.05.22
         add 'use Data::Dumper;' in POD (thanks to oalders, http://annocpan.org/~FAYLAND/WWW-Contact-0.24/lib/WWW/Contact/GoogleContactsAPI.pm#note_2307)
         Funky encoding of some non-alphanumberic chars in Hotmail names fix by OALDERS (RT 46280)

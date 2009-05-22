@@ -7,7 +7,7 @@ use HTTP::Request::Common qw/POST/;
 use HTML::TokeParser::Simple;
 use HTML::Entities ();
 
-our $VERSION   = '0.25';
+our $VERSION   = '0.26';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
@@ -105,7 +105,7 @@ sub get_contacts_from_html {
         my ( $name ) = ( $line =~ /\]\,\s*\'([^\']+)\'/ );
         # Funky encoding of some non-alphanumberic chars in Hotmail names fix by OALDERS (RT 46280)
         if ( $name =~ /\\x/ ) {
-            $name =~ s{\\x(..)}{chr(hex($1))}egxms;
+            $name =~ s{(?|\\x\{([a-f0-9]{4})\}|\\x([a-f0-9]{2}))}{chr(hex($1))}egxms;
             $name = HTML::Entities::decode_entities($name);
         }
         push @contacts, {
