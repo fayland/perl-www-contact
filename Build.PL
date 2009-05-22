@@ -23,7 +23,7 @@ my $builder = Module::Build->new(
     create_makefile_pl => 'traditional',
     meta_merge     => {
         resources => {
-            homepage => 'http://github.com/fayland/perl-www-contact/tree/master',
+            repository => 'http://github.com/fayland/perl-www-contact/tree/master',
         }
     },
 );
