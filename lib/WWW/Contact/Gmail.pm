@@ -105,7 +105,7 @@ __END__
 
 =head1 NAME
 
-WWW::Contact::Gmail - Get contacts/addressbook from Gmail (DEPERCATED for GoogleContactsAPI)
+WWW::Contact::Gmail - Get contacts/addressbook from Gmail (DEPRECATED for GoogleContactsAPI)
 
 =head1 SYNOPSIS
 
