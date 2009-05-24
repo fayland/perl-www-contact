@@ -88,7 +88,7 @@ WWW::Contact::Yahoo - Get contacts/addressbook from Yahoo! Mail
 
 =head1 DESCRIPTION
 
-get addressbook from Yahoo! Mail. extends L<WWW::Contact::Base>
+get addressbook from Yahoo! Mail. Extends L<WWW::Contact::Base>
 
 =head1 SEE ALSO
 

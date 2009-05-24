@@ -106,7 +106,7 @@ WWW::Contact::Rediffmail - Get contacts from Rediffmail
 
 =head1 DESCRIPTION
 
-get contacts from Rediff Mail. extends L<WWW::Contact::Base>
+Get contacts from Rediff Mail. Extends L<WWW::Contact::Base>
 
 =head1 SEE ALSO
 

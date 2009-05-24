@@ -106,7 +106,7 @@ WWW::Contact::CN::163 - Get contacts/addressbook from mail.163.com
 
 =head1 DESCRIPTION
 
-get contacts from mail.163.com. extends L<WWW::Contact::Base>
+Get contacts from mail.163.com. Extends L<WWW::Contact::Base>
 
 =head1 SEE ALSO
 

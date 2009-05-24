@@ -93,7 +93,7 @@ WWW::Contact::Mail - Get contacts from Mail.com
 
 =head1 DESCRIPTION
 
-get contacts from Mail.com. extends L<WWW::Contact::Base>
+Get contacts from Mail.com. Extends L<WWW::Contact::Base>
 
 Mail.com provides email addresses under different domain names. We currently support the most popular ones - 
     mail.com,

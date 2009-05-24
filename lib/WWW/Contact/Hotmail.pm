@@ -143,7 +143,7 @@ WWW::Contact::Hotmail - Get contacts/addressbook from Hotmail/Live Mail
 
 =head1 DESCRIPTION
 
-get contacts from Hotmail/Live Mail L<http://www.hotmail.com>. extends L<WWW::Contact::Base>
+Get contacts from Hotmail/Live Mail L<http://www.hotmail.com/>. Extends L<WWW::Contact::Base>
 
 =head1 WARNING
 

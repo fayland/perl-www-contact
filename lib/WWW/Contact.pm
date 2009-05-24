@@ -223,7 +223,7 @@ WWW::Contact - Get contacts/addressbook from Web
 
 =head1 DESCRIPTION
 
-Get Contacts/AddressBook from public websites
+Get contacts/addressbook from public websites
 
 =head1 SUPPORTED EMAIL SUPPLIER
 

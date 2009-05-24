@@ -93,7 +93,7 @@ WWW::Contact::Indiatimes - Get contacts from Indiatimes
 
 =head1 DESCRIPTION
 
-get contacts from Indiatimes. extends L<WWW::Contact::Base>
+Get contacts from Indiatimes. Extends L<WWW::Contact::Base>
 
 =head1 SEE ALSO
 

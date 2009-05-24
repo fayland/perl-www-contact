@@ -98,7 +98,7 @@ WWW::Contact::Plaxo - Get contacts from Plaxo
 
 =head1 DESCRIPTION
 
-get contacts from plaxo. extends L<WWW::Contact::Base>
+Get contacts from Plaxo. Extends L<WWW::Contact::Base>
 
 =head1 SEE ALSO
 

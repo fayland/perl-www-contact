@@ -124,7 +124,7 @@ WWW::Contact::Gmail - Get contacts/addressbook from Gmail (DEPERCATED for Google
 
 =head1 DESCRIPTION
 
-get contacts from GMail. extends L<WWW::Contact::Base>, replaced by L<WWW::Contact::GoogleContactsAPI>
+Get contacts from Gmail. Extends L<WWW::Contact::Base>, replaced by L<WWW::Contact::GoogleContactsAPI>
 
 =head1 SEE ALSO
 
