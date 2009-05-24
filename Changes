@@ -9,7 +9,7 @@ Revision history for WWW-Contact
         Funky encoding of some non-alphanumberic chars in Hotmail names fix by OALDERS (RT 46280)
 
 0.24    2009.05.14
-        make Gmail DEPERCATED, use GoogleContactsAPI
+        make Gmail DEPRECATED, use GoogleContactsAPI
         L<WWW::Contact::BG::Abv> By Dimitar Petrov
         L<WWW::Contact::BG::Mail> By Dimitar Petrov
 
@@ -24,7 +24,7 @@ Revision history for WWW-Contact
 
 0.20    2009.02.01
         add Hotmail/Gmail into social_network (RT 42924)
-        fix Hotmail whacky results by David Moreno (RT 42925)
+        fix Hotmail wacky results by David Moreno (RT 42925)
         fix Hotmail "You spoke, Hotmail listened" bug by FAYLAND
 
 0.19    2009.01.03
