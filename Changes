@@ -1,5 +1,8 @@
 Revision history for WWW-Contact
 
+0.27
+        POD improvements by Anirvan Chatterjee
+
 0.26    2009.05.22
         Funky encoding of some non-alphanumberic chars in Hotmail names fix
             by Mark Jubenville (RT 46280)
