@@ -92,7 +92,7 @@ WWW::Contact::Lycos - Get contacts from Lycos
 
 =head1 DESCRIPTION
 
-get contacts from Lycos. extends L<WWW::Contact::Base>
+Get contacts from Lycos. Extends L<WWW::Contact::Base>
 
 =head1 SEE ALSO
 

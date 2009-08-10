@@ -85,7 +85,7 @@ WWW::Contact::BG::Mail - Get contacts/addressbook from mail.bg
 
 =head1 DESCRIPTION
 
-get contacts from mail.bg. extends L<WWW::Contact::Base>
+Get contacts from mail.bg. extends L<WWW::Contact::Base>
 
 =head1 SEE ALSO
 

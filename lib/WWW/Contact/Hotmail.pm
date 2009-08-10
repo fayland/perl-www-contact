@@ -7,7 +7,7 @@ use HTTP::Request::Common qw/POST/;
 use HTML::TokeParser::Simple;
 use HTML::Entities ();
 
-our $VERSION   = '0.26';
+our $VERSION   = '0.27';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
@@ -85,6 +85,15 @@ sub get_contacts {
     $self->get("$maildomain/mail/ContactMainLight.aspx?n=$uid") || return;
 
     @contacts = $self->get_contacts_from_html( $ua->content );
+    if ( scalar @contacts > 24 ) { # more pages, scalar @contacts == 25
+        my $page = $self->get_contacts_page_from_html($ua->content);
+        if ( $page > 1 ) {
+            foreach my $p (2..$page) {
+                $self->get("$maildomain/mail/ContactMainLight.aspx?n=$uid&Page=$page") || next;
+                push @contacts, $self->get_contacts_from_html($ua->content);
+            }
+        }
+    }
     
     return wantarray ? @contacts : \@contacts;
 }
@@ -117,6 +126,21 @@ sub get_contacts_from_html {
     return @contacts;
 }
 
+sub get_contacts_page_from_html {
+    my ($self, $content) = @_;
+
+    my $page = 1;
+    foreach my $line (split /\n/, $content) {
+        #<li ><a href="ContactMainLight.aspx&#63;ContactsSortBy&#61;FileAs&#38;Page&#61;2&#38;n&#61;1033539816" title="Next page"
+        if ($line =~ /ContactMainLight.aspx&#.*;Page&#61;(\d+)/) {
+            if ($page < $1) {
+                $page = $1;
+            }
+        }
+    }
+    return $page;
+}
+
 no Moose;
 __PACKAGE__->meta->make_immutable;
 
@@ -143,7 +167,7 @@ WWW::Contact::Hotmail - Get contacts/addressbook from Hotmail/Live Mail
 
 =head1 DESCRIPTION
 
-get contacts from Hotmail/Live Mail L<http://www.hotmail.com>. extends L<WWW::Contact::Base>
+Get contacts from Hotmail/Live Mail L<http://www.hotmail.com/>. Extends L<WWW::Contact::Base>
 
 =head1 WARNING
 

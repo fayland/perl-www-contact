@@ -3,7 +3,7 @@ package WWW::Contact;
 use Class::MOP ();
 use Moose;
 
-our $VERSION   = '0.27';
+our $VERSION   = '0.28';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 has 'errstr'   => ( is => 'rw', isa => 'Maybe[Str]' );
@@ -208,7 +208,7 @@ WWW::Contact - Get contacts/addressbook from Web
         print Dumper(\@contacts);
     }
     
-    # Get contacts from social networks.(eg: Plaxo)
+    # Get contacts from social networks (eg: Plaxo)
     my $ws       = WWW::Contact->new();
     # Note that the last argument for get_contacts() is mandatory,
     # or else it will try to fetch contacts from gmail.com
@@ -223,7 +223,7 @@ WWW::Contact - Get contacts/addressbook from Web
 
 =head1 DESCRIPTION
 
-Get Contacts/AddressBook from public websites.
+Get contacts/addressbook from public websites
 
 =head1 SUPPORTED EMAIL SUPPLIER
 
@@ -231,55 +231,55 @@ Get Contacts/AddressBook from public websites.
 
 =item Gmail
 
-L<WWW::Contact::Gmail> By Fayland Lam, DEPERCATED for L<WWW::Contact::GoogleContactsAPI>
+L<WWW::Contact::Gmail> by Fayland Lam, DEPRECATED for L<WWW::Contact::GoogleContactsAPI>
 
 =item Yahoo! Mail
 
-L<WWW::Contact::Yahoo> By Fayland Lam
+L<WWW::Contact::Yahoo> by Fayland Lam
 
 =item Rediffmail
 
-L<WWW::Contact::Rediffmail> By Sachin Sebastian
+L<WWW::Contact::Rediffmail> by Sachin Sebastian
 
 =item mail.163.com
 
-L<WWW::Contact::CN::163> By Fayland Lam
+L<WWW::Contact::CN::163> by Fayland Lam
 
 =item AOL
 
-L<WWW::Contact::AOL> By Fayland Lam
+L<WWW::Contact::AOL> by Fayland Lam
 
 =item Mail
 
-L<WWW::Contact::Mail> By Sachin Sebastian
+L<WWW::Contact::Mail> by Sachin Sebastian
 
 =item Hotmail/Live Mail
 
-L<WWW::Contact::Hotmail> By Fayland Lam
+L<WWW::Contact::Hotmail> by Fayland Lam
 
 =item Indiatimes
 
-L<WWW::Contact::Indiatimes> By Sachin Sebastian
+L<WWW::Contact::Indiatimes> by Sachin Sebastian
 
 =item Lycos
 
-L<WWW::Contact::Lycos> By Sachin Sebastian
+L<WWW::Contact::Lycos> by Sachin Sebastian
 
 =item Plaxo
 
-L<WWW::Contact::Plaxo> By Sachin Sebastian
+L<WWW::Contact::Plaxo> by Sachin Sebastian
 
 =item GoogleContactsAPI
 
-L<WWW::Contact::GoogleContactsAPI> By Fayland Lam, using Google Contacts Data API
+L<WWW::Contact::GoogleContactsAPI> by Fayland Lam, using Google Contacts Data API
 
 =item abv.bg
 
-L<WWW::Contact::BG::Abv> By Dimitar Petrov
+L<WWW::Contact::BG::Abv> by Dimitar Petrov
 
 =item mail.bg
 
-L<WWW::Contact::BG::Mail> By Dimitar Petrov
+L<WWW::Contact::BG::Mail> by Dimitar Petrov
 
 =back
 
@@ -309,7 +309,7 @@ get supplier by social network name.
 
 =head1 HOW TO WRITE YOUR OWN MODULE
 
-please read L<WWW::Contact::Base> and examples: L<WWW::Contact::Yahoo> and L<WWW::Contact::Plaxo>
+Please read L<WWW::Contact::Base> and examples: L<WWW::Contact::Yahoo> and L<WWW::Contact::Plaxo>
 
 Assuming we write a custom module as WWW::Contact::Unknown
 
