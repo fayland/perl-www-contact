@@ -58,8 +58,6 @@ sub get_contacts {
 sub get_contacts_from_html {
     my ($self, $content) = @_;
 
-    my @contacts;
-    
     my @contents = split('class="gTitleSub', $content);
     shift @contents;
 
