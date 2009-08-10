@@ -17,7 +17,7 @@ sub get_contacts {
     $self->debug("start get_contacts from CN::163");
     
     # to form
-    $self->get('http://reg.163.com/logins.jsp?type=1&url=http://fm163.163.com/coremail/fcg/ntesdoor2?lightweight%3D1%26verifycookie%3D1%26language%3D-1%26style%3D16') || return;
+    $self->get('https://reg.163.com/logins.jsp?type=1&product=mail163&url=http://entry.mail.163.com/coremail/fcg/ntesdoor2?lightweight%3D1%26verifycookie%3D1%26language%3D-1%26style%3D') || return;
     $self->submit_form(
         form_name => 'fLogin',
         fields    => {
@@ -26,7 +26,7 @@ sub get_contacts {
         },
     ) || return;
     my $content = $ua->content();
-    if ($content =~ /=[\'\"]eHint/) {
+    if ($content =~ /fLogin/) {
         $self->errstr('Wrong Username or Password');
         return;
     }
@@ -34,7 +34,12 @@ sub get_contacts {
     $self->debug('Login OK');
     
     while ( $ua->content() =~ /URL=(.*?)\"/ ) {
-        $self->get($1) || return;
+        my $url = $1;
+        if ( $self->{ua}->content() =~ /window.location.replace\(\"(.*?)\"/ ) {
+            $self->get($1) || return;
+        } else {
+            $self->get($url) || return;
+        }
     }
     
     my ($sid) = ( $ua->content() =~ /sid\=(\w+)(\"|\&)/ );
@@ -43,18 +48,7 @@ sub get_contacts {
         return;
     }
     
-    $self->get("/coremail/fcg/ldvcapp?funcid=xportadd&sid=$sid") || return;
-    if ( $ua->content() !~ /outport/ ) {
-        $self->errstr('Wrong Password');
-        return;
-    }
-
-    $self->submit_form(
-        form_name => 'outport',
-        fields    => { outformat => 8, },
-        button    => 'outport.x',
-    ) || return;
-
+    $self->get("/jy3/address/addrprint.jsp?sid=$sid") || return;
     $content = $ua->content();
     @contacts = $self->get_contacts_from_html($content);
     
@@ -66,18 +60,24 @@ sub get_contacts_from_html {
 
     my @contacts;
     
-    my @contents = split( /\n/, $content );
+    my @contents = split('class="gTitleSub', $content);
+    shift @contents;
+
+    my @contacts;
     foreach my $con (@contents) {
-        my @cons  = split( /\,/, $con );
-        my $email = $cons[3];
-        my $name  = $cons[4];
-        $email =~ s/\"//isg;
-        $name  =~ s/\"//isg;
-        next unless ( $email =~ /\@/ );
-        my $c = { name => $name, email => $email };
+        my ( $name, $email );
+        if ( $con =~ /mTT\"\>(.*?)\</ ) {
+            $name = $1;
+        }
+        if ( $con =~ /td\>\s*((.*?)\@(.*?))\</ ) {
+            $email = $1;
+        }
+        next unless $email;
+        
+        my $c = { name => $name || $email, email => $email };
         push @contacts, $c;
     }
-    
+
     return @contacts;
 }
 

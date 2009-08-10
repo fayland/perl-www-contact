@@ -3,7 +3,7 @@ package WWW::Contact::AOL;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.16';
+our $VERSION   = '0.27';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
@@ -62,10 +62,10 @@ sub get_contacts {
     @contacts = $self->get_contacts_from_html($content);
     
     # we don't care if it works or not, to avoid
-    # Error GETing http://webmail-vma.webmail.aol.com/22250/aol/en-us/Shared/Logout.aspx: Forbidden at lib/WWW/Contact/AOL.pm line 64
+    # Error GETing 
     eval {
         $ua->get(
-            "http://webmail-vma.webmail.aol.com/22250/aol/en-us/Shared/Logout.aspx"
+            "http://webmail.aol.com/$gSuccessPath/aol/en-us/common/Logout.aspx"
         );
     };
     
