@@ -3,7 +3,7 @@ package WWW::Contact::Yahoo;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.16';
+our $VERSION   = '0.29';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 has '+ua_class' => ( default => 'WWW::Mechanize::GZip' );
@@ -35,7 +35,7 @@ sub get_contacts {
     
     $self->debug('Login OK');
 
-    $self->get('http://address.mail.yahoo.com/') || return;
+    $self->get('http://address.mail.yahoo.com/?VPC=contact_list&.rand=' . time()) || return;
     $ua->follow_link( url_regex => qr/import_export/i );
     
     $ua->form_number(0); # the last form
