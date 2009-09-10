@@ -3,7 +3,7 @@ package WWW::Contact::Rediffmail;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.16';
+our $VERSION   = '0.30';
 our $AUTHORITY = 'cpan:SACHINJSK';
 
 sub get_contacts {
@@ -22,7 +22,6 @@ sub get_contacts {
     
     # get to login form
     $self->get('http://www.rediff.com') || return;
-
     $self->submit_form(
         form_name => 'loginform',
         fields    => {
@@ -30,7 +29,7 @@ sub get_contacts {
             passwd => $password,
         },
     ) || return;
-    
+
     my $content = $ua->content();
     if ($content =~ /Your login failed/ig) {
         $self->errstr('Wrong Username or Password');
@@ -38,27 +37,27 @@ sub get_contacts {
     }
 
     $self->debug('Login OK');
-    
     $ua->follow_link( url_regex => qr/login=/i );
-    my $link = $ua->follow_link( url_regex => qr/folder=inbox/i );
+    $ua->follow_link( url_regex => qr/folder=inbox/i );
     $content = $ua->content;
 
     # Go to new Rediffmail, if taken to old one.
-    if ($content =~ /new Rediffmail/ig) {
-        $link = $ua->follow_link(text_regex => qr/new Rediffmail/i );
+    if ($content =~ /new Rediffmail/i) {
+        $ua->follow_link(text_regex => qr/new Rediffmail/i );
     }
-    
-    # get url and session id.
-    my $base_link = $link->base();
-    $base_link =~ /(.*)\?.*session_id=(.*?)&/;
-    my $base_url   = $1;
-    my $session_id = $2;
+    $self->get("/prism/exportaddrbook?output=web") || return;
 
-    $self->get("$base_url?do=downaddrbook&login=$username&session_id=$session_id&service=thunderbird");
+    my $uri = $ua->uri->as_string;
+    $self->ua->current_form->action("$uri&service=thunderbird");
+    $self->submit_form(
+        form_name => 'exportaddr',
+        fields    => {
+            exporttype => 'thunderbird',
+        },
+    ) || return;
 
     my $address_content = $ua->content();
     @contacts = get_contacts_from_thunderbird_csv($address_content);
-    
     return wantarray ? @contacts : \@contacts;
 }
 
@@ -66,14 +65,14 @@ sub get_contacts_from_thunderbird_csv {
     my ($csv) = shift;
     my @contacts;
  
-    # first_name, last_name, full_name, nickname, e-mail.
+    # dn:cn=tester cpan,mail=tester_cpan@rediffmail.com
     my @lines = split(/\n/, $csv);
     foreach my $line (@lines) {
-        $line =~ s/"//g;
-        my @cols = split(',', $line);
+        next if $line !~ /^dn\:cn/;
+        my ($name, $email) = ( $line =~ /cn=(.*?)\,mail=(.*?)$/ );
         push @contacts, {
-            name  => $cols[2],
-            email => $cols[4]
+            name  => $name,
+            email => $email
         };
     }
     
