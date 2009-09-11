@@ -7,7 +7,7 @@ use HTTP::Request::Common qw/POST/;
 use HTML::TokeParser::Simple;
 use HTML::Entities ();
 
-our $VERSION   = '0.27';
+our $VERSION   = '0.31';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
@@ -82,6 +82,11 @@ sub get_contacts {
     # TodayDefault, Our latest improvements
     my ( $maildomain ) = ( $ua->content =~ /base\s+href\=\"((.*?)\.mail\.live\.com)/ ); # <base href="http://co118w.col118.mail.live.com/" />
     my ( $uid ) = ( $ua->content =~ /n\&\#61\;(\d+)/ ); # n&#61;
+    unless ( $uid ) {
+	    $self->errstr('Wrong Username or Password');
+	    return;
+	}
+
     $self->get("$maildomain/mail/ContactMainLight.aspx?n=$uid") || return;
 
     @contacts = $self->get_contacts_from_html( $ua->content );
