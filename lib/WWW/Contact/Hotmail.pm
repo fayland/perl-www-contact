@@ -7,7 +7,7 @@ use HTTP::Request::Common qw/POST/;
 use HTML::TokeParser::Simple;
 use HTML::Entities ();
 
-our $VERSION   = '0.31';
+our $VERSION   = '0.32';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
@@ -80,14 +80,15 @@ sub get_contacts {
     }
 
     # TodayDefault, Our latest improvements
-    my ( $maildomain ) = ( $ua->content =~ /base\s+href\=\"((.*?)\.mail\.live\.com)/ ); # <base href="http://co118w.col118.mail.live.com/" />
+    # <base href="http&#58;&#47;&#47;co118w.col118.mail.live.com&#47;mail&#47;TodayLight.aspx&#63;layout&#61;TodayDefault&#38;rru&#61;&#38;n&#61;1976853626" />
+    my ( undef, $maildomain ) = ( $ua->content =~ /base\s+href\=\"(.*?)&\#47\;&\#47\;((.*?)\.mail\.live\.com)/ );
     my ( $uid ) = ( $ua->content =~ /n\&\#61\;(\d+)/ ); # n&#61;
     unless ( $uid ) {
 	    $self->errstr('Wrong Username or Password');
 	    return;
 	}
 
-    $self->get("$maildomain/mail/ContactMainLight.aspx?n=$uid") || return;
+    $self->get("http://$maildomain/mail/ContactMainLight.aspx?n=$uid") || return;
 
     @contacts = $self->get_contacts_from_html( $ua->content );
     if ( scalar @contacts > 24 ) { # more pages, scalar @contacts == 25
@@ -109,7 +110,7 @@ sub get_contacts_from_html {
     my @contacts;
     
     # cxp_ic_control_data
-    my ( $data ) = ( $content =~ /cxp_ic_control_data(.*?)\}/s );
+    my ( $data ) = ( $content =~ /cxp_ic_control_data(.*?)\}\;/s );
     my @lines = split(/\n/, $data);
     foreach my $line ( @lines ) {
         # ICc0:['0ea61975fb7fb339','1',['sm','si','ct'],'fayland lam','55ff0c7e-2c36-41cc-aa12-fb1db452f171','1055559157186278201','fayland\x40gmail.com','fayland\x40gmail.com','','1',[['Send e-mail','','','submitToCompose\x28\x2755ff0c7e-2c36-41cc-aa12-fb1db452f171\x27, \x27EditMessageLight.aspx\x3fn\x3d1423059530\x27\x29'],['Edit contact info','ContactEditLight.aspx\x3fContactID\x3d55ff0c7e-2c36-41cc-aa12-fb1db452f171\x26n\x3d1980367392','','','_self']]],
