@@ -8,6 +8,7 @@ WriteMakefile
                            'Crypt::SSLeay' => '0',
                            'HTML::Entities' => '0',
                            'HTML::TokeParser::Simple' => '0',
+                           'HTML::TreeBuilder' => '0',
                            'JSON::XS' => '0',
                            'Moose' => '0.77',
                            'Net::Google::AuthSub' => '0',
