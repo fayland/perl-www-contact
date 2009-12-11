@@ -12,6 +12,7 @@ my $builder = Module::Build->new(
         'Moose'      => '0.77',
         'WWW::Mechanize' => 0,
         'WWW::Mechanize::GZip' => 0,
+        'HTML::TreeBuilder'    => 0,
         'HTML::TokeParser::Simple' => 0,
         'Crypt::SSLeay'  => 0, # https
         'Net::Google::AuthSub' => 0,

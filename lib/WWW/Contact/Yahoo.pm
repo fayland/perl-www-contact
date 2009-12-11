@@ -3,7 +3,7 @@ package WWW::Contact::Yahoo;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.29';
+our $VERSION   = '0.33';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 has '+ua_class' => ( default => 'WWW::Mechanize::GZip' );
@@ -35,28 +35,59 @@ sub get_contacts {
     
     $self->debug('Login OK');
 
-    $self->get('http://address.mail.yahoo.com/?VPC=contact_list&.rand=' . time()) || return;
-    $ua->follow_link( url_regex => qr/import_export/i );
-    
-    $ua->form_number(0); # the last form
+    $self->get('http://address.mail.yahoo.com/?_src=&VPC=tools_print') || return;
+
     $self->submit_form(
-        button      => 'submit[action_export_yahoo]',
-    );
+        with_fields => {
+            'field[allc]' => 1,
+            'field[style]' => 'quick',
+        },
+        button => 'submit[action_display]',
+    ) || return;
     
-    $content = $ua->content();
-    my $i;
-    while ( $content
-        =~ /^\"(.*?)\"\,\".*?\"\,\"(.*?)\"\,\".*?\"\,\"(.*?)\"\,\".*?\"\,\".*?\"\,\"(.*?)\"/mg
-        ) {
-        $i++;
-        next if ( $i == 1 );    # skip the first line.
-        next unless ( $3 or $4 );
-        my $email = $3 || $4 . '@yahoo.com';
-        my $name = ( $1 or $2 ) ? "$1 $2" : $4;
+    require HTML::TreeBuilder;
+    my $tree = HTML::TreeBuilder->new;
+    $tree->parse_content($ua->content);
+    $tree->elementify;
+    
+    my @tables = $tree->look_down( '_tag', 'table', 'class', 'qprintable2' );
+    while (my $table = shift @tables) {
+        # two tr, one has class phead
+        my @trs = $table->look_down( '_tag', 'tr' );
+        my ($phead_tr, @other_tr);
+        while (my $tr = shift @trs) {
+            if ( $tr->attr('class') and $tr->attr('class') eq 'phead' ) {
+                $phead_tr = $tr;
+            } else {
+                push @other_tr, $tr;
+            }
+        }
+        my $name = $phead_tr->look_down( '_tag', 'b' )->as_text;
+        $name ||=  $phead_tr->look_down( '_tag', 'i' ) ? $phead_tr->look_down( '_tag', 'i' )->as_text : '';
+        my $yahoo_id = $phead_tr->look_down( '_tag', 'small' ) ? $phead_tr->look_down( '_tag', 'small' )->as_text : '';
+        my $email;
+        OTR: while (my $tr = shift @other_tr) {
+            my @divs = $tr->look_down( '_tag', 'div' );
+            foreach my $div (@divs) {
+                my $text = $div->as_text;
+                next unless $text;
+                if ( $text =~ /\@/ ) {
+                    $email = $text;
+                    last OTR;
+                }
+            }
+        }
+        if (not $email and $yahoo_id) {
+            # treat as '@yahoo.com' by default
+            $email = ($yahoo_id =~ /\@/) ? $yahoo_id : $yahoo_id . '@yahoo.com';
+        }
+        next unless $email;
+        $name =~ s/(^\s+|\s+$)//g;
+        $name ||= $yahoo_id;
         push @contacts, {
-            name       => $name,
-            email      => $email,
-        };;
+            name => $name,
+            email => $email,
+        };
     }
 
     return wantarray ? @contacts : \@contacts;
