@@ -3,7 +3,7 @@ package WWW::Contact::Yahoo;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.33';
+our $VERSION   = '0.34';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 has '+ua_class' => ( default => 'WWW::Mechanize::GZip' );
@@ -30,6 +30,12 @@ sub get_contacts {
     my $content = $ua->content();
     if ($content =~ /=[\'\"]yregertxt/) {
         $self->errstr('Wrong Username or Password');
+        return;
+    }
+    
+    # https://edit.yahoo.com/recovery/update
+    if ( $ua->base =~ /recovery\/update/ ) {
+        $self->errstr("Account Recovery Issue");
         return;
     }
     
