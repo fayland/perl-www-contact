@@ -9,6 +9,8 @@ my $builder = Module::Build->new(
     dist_version_from   => 'lib/WWW/Contact.pm',
     build_requires => {
         'Test::More' => 0,
+    },
+    requires => {
         'Moose'      => '0.77',
         'WWW::Mechanize' => 0,
         'WWW::Mechanize::GZip' => 0,
