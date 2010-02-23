@@ -60,6 +60,7 @@ has 'known_supplier' => (
             'msn.com'           => 'Hotmail',
             'passport.com'      => 'Hotmail',
             'webtv.net'         => 'Hotmail',
+            'live.co.uk'        => 'Hotmail',
 
             # bg
             'abv.bg'            => 'BG::Abv',

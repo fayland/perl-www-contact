@@ -1,6 +1,9 @@
 Revision history for WWW-Contact
 
-0.36    2010.0127
+0.37    2010.02.23
+        MSN login fix && add live.co.uk (Reported by Gez Hall)
+
+0.36    2010.01.27
         AOL fix
 
 0.35    2009.12.11
