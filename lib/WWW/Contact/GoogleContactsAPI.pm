@@ -84,7 +84,7 @@ WWW::Contact::GoogleContactsAPI - Get contacts/addressbook by Google Contacts Da
 
 =head1 DESCRIPTION
 
-L<http://code.google.com/apis/contacts/docs/2.0/reference.html>
+L<http://code.google.com/apis/contacts/docs/3.0/developers_guide_protocol.html>
 
 =head1 SEE ALSO
 
@@ -96,7 +96,7 @@ Fayland Lam, C<< <fayland at gmail.com> >>
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2008 Fayland Lam, all rights reserved.
+Copyright 2008-2009 Fayland Lam, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

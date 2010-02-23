@@ -7,7 +7,7 @@ use HTTP::Request::Common qw/POST/;
 use HTML::TokeParser::Simple;
 use HTML::Entities ();
 
-our $VERSION   = '0.35';
+our $VERSION   = '0.37';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
@@ -35,7 +35,9 @@ sub get_contacts {
     # from http://login.live.com/WLLogin_JS.srf?x=6.0.11557.0&lc=1033
     #  g_DO["compaq.net"]="https://msnia.login.live.com/ppsecure/post.srf";g_DO["hotmail.co.jp"]="https://login.live.com/ppsecure/post.srf";g_DO["hotmail.co.uk"]="https://login.live.com/ppsecure/post.srf";g_DO["hotmail.com"]="https://login.live.com/ppsecure/post.srf";g_DO["hotmail.de"]="https://login.live.com/ppsecure/post.srf";g_DO["hotmail.fr"]="https://login.live.com/ppsecure/post.srf";g_DO["hotmail.it"]="https://login.live.com/ppsecure/post.srf";g_DO["messengeruser.com"]="https://login.live.com/ppsecure/post.srf";g_DO["msn.com"]="https://msnia.login.live.com/ppsecure/post.srf";g_DO["passport.com"]="https://login.live.com/ppsecure/post.srf";g_DO["webtv.net"]="https://login.live.com/ppsecure/post.srf"; 
     if ( $domain eq 'compaq.net' or $domain eq 'msn.com' ) {
-        $post_url = 'https://msnia.login.live.com/ppsecure/post.srf';
+        # var g_QS="wa=wsignin1.0&rpsnv=11&ct=1266924668&rver=6.0.5285.0&wp=MBI&wreply=http:%2F%2Fmail.live.com%2Fdefault.aspx&lc=1033&id=64855&mkt=en-us&bk=1266924668";
+        my ($post_param) = ($content =~ /g_QS\s*\=\s*[\"\']([^\'\"]+)[\"\']/);
+        $post_url = 'https://msnia.login.live.com/ppsecure/post.srf?' . $post_param;
     }
     
     #  switch(g_iActiveCredtype){case 1:if(g_fLWASilentAuth==true)s.type.value=30;else s.type.value=11;break;case 2:s.type.value=12;if(s.CS.value==""){if(!SubmitCardSpace())return false;}break;case 4:s.type.value=14;if(g_fEIDSupported&&typeof g_EIDScriptDL!="undefined"){if(!EIDSubmit(s))return false;}break;case 3:s.type.value=13;
