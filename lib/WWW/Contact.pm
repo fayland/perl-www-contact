@@ -3,7 +3,7 @@ package WWW::Contact;
 use Class::MOP ();
 use Moose;
 
-our $VERSION   = '0.37';
+our $VERSION   = '0.38';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 has 'errstr'   => ( is => 'rw', isa => 'Maybe[Str]' );
@@ -204,7 +204,7 @@ WWW::Contact - Get contacts/addressbook from Web
     my @contacts = $wc->get_contacts('fayland@gmail.com', 'password');
     my $errstr   = $wc->errstr;
     if ($errstr) {
-        die $errstr; # like 'Wrong Password'
+        die $errstr; # like 'Wrong Username or Password'
     } else {
         print Dumper(\@contacts);
     }

@@ -29,7 +29,7 @@ sub get_contacts {
     ) || return;
     my $content = $ua->content();
     if ($content =~ /name\=\"loginId\"/) {
-        $self->errstr('Wrong Password');
+        $self->errstr('Wrong Username or Password');
         return;
     }
     
@@ -49,8 +49,8 @@ sub get_contacts {
         $self->get($1) || return;
     }
 
-    my ($gSuccessPath) = ( $ua->content() =~ /\.com\/([^\/]+)\/aol/ );
-    $self->get( "http://webmail.aol.com/$gSuccessPath/aol/en-us/Lite/MsgList.aspx" ) || return;
+    my ($gSuccessPath, $aol_v) = ( $ua->content() =~ /\.com\/([^\/]+)\/(aol[^\/]*)\// );
+    $self->get( "http://webmail.aol.com/$gSuccessPath/$aol_v/en-us/Lite/Today.aspx?src=bandwidth" ) || return;
 
     my ($uid) = ($ua->content() =~ /user\=([^\'\&]+)[\'\&]/);
     unless ($uid) {
@@ -60,7 +60,7 @@ sub get_contacts {
     
     # http://webmail.aol.com/39598/aol/en-us/Lite/addresslist-print.aspx?command=all&sort=FirstLastNick&sortDir=Ascending&nameFormat=FirstLastNick&user=lP9ZCc0KdY
     $ua->get(
-        "http://webmail.aol.com/$gSuccessPath/aol/en-us/Lite/addresslist-print.aspx?command=all&sort=FirstLastNick&sortDir=Ascending&nameFormat=FirstLastNick&user=$uid"
+        "http://webmail.aol.com/$gSuccessPath/$aol_v/en-us/Lite/addresslist-print.aspx?command=all&sort=FirstLastNick&sortDir=Ascending&nameFormat=FirstLastNick&user=$uid"
     ) || return;
 
     $content = $ua->content();
@@ -70,7 +70,7 @@ sub get_contacts {
     # Error GETing 
     eval {
         $ua->get(
-            "http://webmail.aol.com/$gSuccessPath/aol/en-us/common/Logout.aspx"
+            "http://webmail.aol.com/$gSuccessPath/$aol_v/en-us/common/Logout.aspx"
         );
     };
     
