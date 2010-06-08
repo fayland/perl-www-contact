@@ -6,7 +6,7 @@ build_requires:
   Test::More: 0
 configure_requires:
   Module::Build: 0.36
-generated_by: 'Module::Build version 0.3601'
+generated_by: 'Module::Build version 0.3607'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -15,7 +15,7 @@ name: WWW-Contact
 provides:
   WWW::Contact:
     file: lib/WWW/Contact.pm
-    version: 0.36
+    version: 0.38
   WWW::Contact::AOL:
     file: lib/WWW/Contact/AOL.pm
     version: 0.36
@@ -39,7 +39,7 @@ provides:
     version: 0.23
   WWW::Contact::Hotmail:
     file: lib/WWW/Contact/Hotmail.pm
-    version: 0.35
+    version: 0.37
   WWW::Contact::Indiatimes:
     file: lib/WWW/Contact/Indiatimes.pm
     version: 0.16
@@ -72,4 +72,4 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
   repository: http://github.com/fayland/perl-www-contact/tree/master
-version: 0.36
+version: 0.38
