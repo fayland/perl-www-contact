@@ -15,10 +15,10 @@ name: WWW-Contact
 provides:
   WWW::Contact:
     file: lib/WWW/Contact.pm
-    version: 0.38
+    version: 0.39
   WWW::Contact::AOL:
     file: lib/WWW/Contact/AOL.pm
-    version: 0.36
+    version: 0.39
   WWW::Contact::BG::Abv:
     file: lib/WWW/Contact/BG/Abv.pm
     version: 0.26
@@ -72,4 +72,4 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
   repository: http://github.com/fayland/perl-www-contact/tree/master
-version: 0.38
+version: 0.39
