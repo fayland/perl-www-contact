@@ -3,7 +3,7 @@ package WWW::Contact::AOL;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.36';
+our $VERSION   = '0.39';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
@@ -19,7 +19,7 @@ sub get_contacts {
     $self->debug("start get_contacts from AOL mail");
     
     # to form
-    $self->get('https://my.screenname.aol.com/_cqr/login/login.psp?mcState=initialized&uitype=mini&sitedomain=sns.webmail.aol.com&authLev=1&seamless=novl&lang=en&locale=us') || return;
+    $self->get('https://my.screenname.aol.com/_cqr/login/login.psp?mcState=initialized&uitype=mini&sitedomain=registration.aol.com&authLev=1&seamless=novl&lang=en&locale=us') || return;
     $self->submit_form(
         form_name => 'AOLLoginForm',
         fields    => {
@@ -37,9 +37,9 @@ sub get_contacts {
 
     my ($url) = ( $content =~ /\'(http\:\/\/(.*?))\'/ );
     $self->get($url) || return;
-    $self->get('http://webmail.aol.com/');
+    $self->get('http://mail.aol.com/');
     
-    # http://my.screenname.aol.com/_cqr/login/login.psp?sitedomain=sns.webmail.aol.com&lang=en&locale=us&authLev=0&uitype=mini&siteState=ver%3a4%7crt%3aSTANDARD%7cat%3aSNS%7cld%3awebmail.aol.com%7crp%3aLite%252fToday.aspx%7cuv%3aAOL%7clc%3aen-us%7cmt%3aAOL%7csnt%3aScreenName%7csid%3a721f5d19-a18f-4f11-bf35-500d91ddf6d6&seamless=novl&loginId=&_sns_width_=174&_sns_height_=196&_sns_fg_color_=373737&_sns_err_color_=C81A1A&_sns_link_color_=0066CC&_sns_bg_color_=FFFFFF&redirType=js
+    # http://my.screenname.aol.com/_cqr/login/login.psp?sitedomain=sns.mail.aol.com&lang=en&locale=us&authLev=0&uitype=mini&siteState=ver%3a4%7crt%3aSTANDARD%7cat%3aSNS%7cld%3amail.aol.com%7crp%3aLite%252fToday.aspx%7cuv%3aAOL%7clc%3aen-us%7cmt%3aAOL%7csnt%3aScreenName%7csid%3a721f5d19-a18f-4f11-bf35-500d91ddf6d6&seamless=novl&loginId=&_sns_width_=174&_sns_height_=196&_sns_fg_color_=373737&_sns_err_color_=C81A1A&_sns_link_color_=0066CC&_sns_bg_color_=FFFFFF&redirType=js
     $content = $ua->{content};
     if ( $content =~ /(http\:\/\/my.screenname.aol.com\/_cqr\/login\/login.psp([^\'\"]+))/s ) {
         $self->get($1) || return;
@@ -50,7 +50,7 @@ sub get_contacts {
     }
 
     my ($gSuccessPath, $aol_v) = ( $ua->content() =~ /\.com\/([^\/]+)\/(aol[^\/]*)\// );
-    $self->get( "http://webmail.aol.com/$gSuccessPath/$aol_v/en-us/Lite/Today.aspx?src=bandwidth" ) || return;
+    $self->get( "http://mail.aol.com/$gSuccessPath/$aol_v/en-us/Lite/Today.aspx?src=bandwidth" ) || return;
 
     my ($uid) = ($ua->content() =~ /user\=([^\'\&]+)[\'\&]/);
     unless ($uid) {
@@ -58,9 +58,9 @@ sub get_contacts {
         return;
     }
     
-    # http://webmail.aol.com/39598/aol/en-us/Lite/addresslist-print.aspx?command=all&sort=FirstLastNick&sortDir=Ascending&nameFormat=FirstLastNick&user=lP9ZCc0KdY
+    # http://mail.aol.com/39598/aol/en-us/Lite/addresslist-print.aspx?command=all&sort=FirstLastNick&sortDir=Ascending&nameFormat=FirstLastNick&user=lP9ZCc0KdY
     $ua->get(
-        "http://webmail.aol.com/$gSuccessPath/$aol_v/en-us/Lite/addresslist-print.aspx?command=all&sort=FirstLastNick&sortDir=Ascending&nameFormat=FirstLastNick&user=$uid"
+        "http://mail.aol.com/$gSuccessPath/$aol_v/en-us/Lite/addresslist-print.aspx?command=all&sort=FirstLastNick&sortDir=Ascending&nameFormat=FirstLastNick&user=$uid"
     ) || return;
 
     $content = $ua->content();
@@ -70,7 +70,7 @@ sub get_contacts {
     # Error GETing 
     eval {
         $ua->get(
-            "http://webmail.aol.com/$gSuccessPath/$aol_v/en-us/common/Logout.aspx"
+            "http://mail.aol.com/$gSuccessPath/$aol_v/en-us/common/Logout.aspx"
         );
     };
     
