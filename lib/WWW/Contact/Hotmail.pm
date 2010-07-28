@@ -83,7 +83,7 @@ sub get_contacts {
 
     # TodayDefault, Our latest improvements
     # <base href="http&#58;&#47;&#47;co118w.col118.mail.live.com&#47;mail&#47;TodayLight.aspx&#63;layout&#61;TodayDefault&#38;rru&#61;&#38;n&#61;1976853626" />
-    my ( undef, $maildomain ) = ( $ua->content =~ /base\s+href\=\"(.*?)&\#47\;&\#47\;((.*?)\.mail\.live\.com)/ );
+    my ( undef, undef, $maildomain ) = ( $ua->content =~ /base\s+href\=\"(.*?)(&\#47\;&\#47\;|\/\/)((.*?)\.mail\.live\.com)/ );
     my ( $uid ) = ( $ua->content =~ /n\&\#61\;(\d+)/ ); # n&#61;
     unless ( $uid ) {
 	    $self->errstr('Wrong Username or Password');
@@ -103,6 +103,10 @@ sub get_contacts {
         }
     }
     
+    # remove email itself
+    @contacts = grep { $_->{email} ne $email } @contacts;
+
+    
     return wantarray ? @contacts : \@contacts;
 }
 
@@ -113,22 +117,43 @@ sub get_contacts_from_html {
     
     # cxp_ic_control_data
     my ( $data ) = ( $content =~ /cxp_ic_control_data(.*?)\}\;/s );
-    my @lines = split(/\n/, $data);
-    foreach my $line ( @lines ) {
-        # ICc0:['0ea61975fb7fb339','1',['sm','si','ct'],'fayland lam','55ff0c7e-2c36-41cc-aa12-fb1db452f171','1055559157186278201','fayland\x40gmail.com','fayland\x40gmail.com','','1',[['Send e-mail','','','submitToCompose\x28\x2755ff0c7e-2c36-41cc-aa12-fb1db452f171\x27, \x27EditMessageLight.aspx\x3fn\x3d1423059530\x27\x29'],['Edit contact info','ContactEditLight.aspx\x3fContactID\x3d55ff0c7e-2c36-41cc-aa12-fb1db452f171\x26n\x3d1980367392','','','_self']]],
-        my ( $email ) = ( $line =~ /\'([^\']+\\x40(.*?))\'/ );
-        next unless $email;
-        $email =~ s/\\x40/\@/;
-        my ( $name ) = ( $line =~ /\]\,\s*\'([^\']+)\'/ );
-        # Funky encoding of some non-alphanumberic chars in Hotmail names fix by OALDERS (RT 46280)
-        if ( $name =~ /\\x/ ) {
-            $name =~ s{\\x([A-Fa-f0-9]{2})}{chr(hex($1))}egxms;
-            $name = HTML::Entities::decode_entities($name);
+    if ($data) {
+        my @lines = split(/\n/, $data);
+        foreach my $line ( @lines ) {
+            # ICc0:['0ea61975fb7fb339','1',['sm','si','ct'],'fayland lam','55ff0c7e-2c36-41cc-aa12-fb1db452f171','1055559157186278201','fayland\x40gmail.com','fayland\x40gmail.com','','1',[['Send e-mail','','','submitToCompose\x28\x2755ff0c7e-2c36-41cc-aa12-fb1db452f171\x27, \x27EditMessageLight.aspx\x3fn\x3d1423059530\x27\x29'],['Edit contact info','ContactEditLight.aspx\x3fContactID\x3d55ff0c7e-2c36-41cc-aa12-fb1db452f171\x26n\x3d1980367392','','','_self']]],
+            my ( $email ) = ( $line =~ /\'([^\']+\\x40(.*?))\'/ );
+            next unless $email;
+            $email =~ s/\\x40/\@/;
+            my ( $name ) = ( $line =~ /\]\,\s*\'([^\']+)\'/ );
+            # Funky encoding of some non-alphanumberic chars in Hotmail names fix by OALDERS (RT 46280)
+            if ( $name =~ /\\x/ ) {
+                $name =~ s{\\x([A-Fa-f0-9]{2})}{chr(hex($1))}egxms;
+                $name = HTML::Entities::decode_entities($name);
+            }
+            push @contacts, {
+                email => $email,
+                name  => $name,
+            };
         }
-        push @contacts, {
-            email => $email,
-            name  => $name,
-        };
+    } else {
+        # ic_control_data
+        ( $data ) = ( $content =~ /ic_control_data(.*?)\}\;/s );
+        my @lines = split(/\n/, $data);
+        foreach my $line ( @lines ) {
+            # "ic2":["","1",["se","vd"],"33","0832c2b8-aeba-4c9c-a359-5dfff5664610","0","333\u004022.com","cid\u003a0",[],"","","1",[],"","","",""
+            my ( $email ) = ( $line =~ /[\'\"]([^\'\"]+\\u0040(.*?))[\'\"]/ );
+            next unless $email;
+            $email =~ s/\\u0040/\@/;
+            my ( $name ) = ( $line =~ /\]\,\s*[\'\"]([^\'\"]+)[\'\"]/ );
+            # Funky encoding of some non-alphanumberic chars in Hotmail names fix by OALDERS (RT 46280)
+            if ( $name =~ /\\u/ ) {
+                $name =~ s/\\u(....)/ pack 'U*', hex($1) /eg;
+            }
+            push @contacts, {
+                email => $email,
+                name  => $name,
+            };
+        }
     }
 
     return @contacts;
