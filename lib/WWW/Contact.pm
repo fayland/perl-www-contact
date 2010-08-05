@@ -3,7 +3,7 @@ package WWW::Contact;
 use Class::MOP ();
 use Moose;
 
-our $VERSION   = '0.40';
+our $VERSION   = '0.41';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 has 'errstr'   => ( is => 'rw', isa => 'Maybe[Str]' );

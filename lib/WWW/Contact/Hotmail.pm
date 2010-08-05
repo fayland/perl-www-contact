@@ -7,7 +7,7 @@ use HTTP::Request::Common qw/POST/;
 use HTML::TokeParser::Simple;
 use HTML::Entities ();
 
-our $VERSION   = '0.37';
+our $VERSION   = '0.41';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
@@ -97,7 +97,7 @@ sub get_contacts {
         my $page = $self->get_contacts_page_from_html($ua->content);
         if ( $page > 1 ) {
             foreach my $p (2..$page) {
-                $self->get("http://$maildomain/mail/ContactMainLight.aspx?n=$uid&Page=$page") || next;
+                $self->get("http://$maildomain/mail/ContactMainLight.aspx?n=$uid&Page=$p") || next;
                 push @contacts, $self->get_contacts_from_html($ua->content);
             }
         }
