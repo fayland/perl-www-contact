@@ -15,7 +15,7 @@ name: WWW-Contact
 provides:
   WWW::Contact:
     file: lib/WWW/Contact.pm
-    version: 0.40
+    version: 0.41
   WWW::Contact::AOL:
     file: lib/WWW/Contact/AOL.pm
     version: 0.39
@@ -39,7 +39,7 @@ provides:
     version: 0.23
   WWW::Contact::Hotmail:
     file: lib/WWW/Contact/Hotmail.pm
-    version: 0.37
+    version: 0.41
   WWW::Contact::Indiatimes:
     file: lib/WWW/Contact/Indiatimes.pm
     version: 0.16
@@ -72,4 +72,4 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
   repository: http://github.com/fayland/perl-www-contact/tree/master
-version: 0.40
+version: 0.41
