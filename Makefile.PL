@@ -13,7 +13,7 @@ WriteMakefile
                            'Moose' => '0.77',
                            'Net::Google::AuthSub' => 0,
                            'Test::More' => 0,
-                           'Text::vCard::Addressbook' => 0,
+                           'Text::vCard' => 0,
                            'WWW::Mechanize' => 0,
                            'WWW::Mechanize::GZip' => 0
                          },
