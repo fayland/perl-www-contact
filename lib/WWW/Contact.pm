@@ -85,6 +85,12 @@ has 'social_network' => (
     }
 );
 
+has 'supplier_args' => (
+    is  => 'rw',
+    isa => 'HashRef',
+    default => sub { {} }
+);
+
 sub get_contacts {
     my $self = shift;
     my ( $email, $password, $social_network ) = @_;
@@ -98,9 +104,7 @@ sub get_contacts {
         $self->errstr('You must supply full email address.');
         return;
     }
-    
-    my ( $username, $postfix ) = ( lc($1), lc($2) );
-    
+
     # get supplier module
     my $supplier;
     if($social_network) {
@@ -120,7 +124,7 @@ sub get_contacts {
     
     my $module = 'WWW::Contact::' . $supplier;
     Class::MOP::load_class($module);
-    my $wc = $module->new();
+    my $wc = $module->new( $self->supplier_args );
     
     # reset
     $self->errstr(undef);
