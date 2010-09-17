@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use FindBin qw/$Bin/;
 use lib "$Bin/lib";
-use Test::More tests => 12;
+use Test::More tests => 16;
 use WWW::Contact;
 
 my $wc = WWW::Contact->new();
@@ -41,5 +41,13 @@ is($supplier, 'GoogleContactsAPI');
 
 $supplier = $wc->get_supplier_by_email('pimenov@uplifto.ru');
 is($supplier, 'GoogleContactsAPI');
+
+$supplier = $wc->get_supplier_by_email('pimenov@uplifto.ru');
+is($supplier, 'GoogleContactsAPI');
+
+my $r = $wc->resolve;
+is(scalar keys %$r, 2);
+is($r->{'uplifto.ru'}, 'GoogleContactsAPI');
+is($r->{'dcp24.ru'  }, 'GoogleContactsAPI');
 
 1;

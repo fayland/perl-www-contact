@@ -91,6 +91,12 @@ has 'supplier_args' => (
     default => sub { {} }
 );
 
+has 'resolve' => (
+    is  => 'rw',
+    isa => 'HashRef',
+    default => sub { {} }
+);
+
 has 'resolve_domain' => (
     is      => 'ro',
     isa     => 'Net::DNS::Resolver',
@@ -99,7 +105,7 @@ has 'resolve_domain' => (
         require Net::DNS::Resolver;
         Net::DNS::Resolver->new;
     },
-); 
+);
 
 sub get_contacts {
     my $self = shift;
@@ -177,10 +183,14 @@ sub get_supplier_by_email {
     }
     
     # resolve domain
+    my $r = $self->resolve;
+    return $r->{ $domain } if exists $r->{ $domain };
+    
+    # warn 'resolve domain';
     foreach my $mx ($self->resolve_domain->query($domain, 'MX')) {
         for ($mx->answer) {
             # google corporate mail
-            return $known_supplier{'gmail.com'} if $_->exchange =~ /google(?:mail)?\.com$/i;
+            return $r->{ $domain } = $known_supplier{'gmail.com'} if $_->exchange =~ /google(?:mail)?\.com$/i;
         }
     }
     
