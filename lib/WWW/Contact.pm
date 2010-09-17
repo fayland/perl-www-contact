@@ -91,6 +91,16 @@ has 'supplier_args' => (
     default => sub { {} }
 );
 
+has 'resolve_domain' => (
+    is      => 'ro',
+    isa     => 'Net::DNS::Resolver',
+    lazy    => 1,
+    default => sub {
+        require Net::DNS::Resolver;
+        Net::DNS::Resolver->new;
+    },
+); 
+
 sub get_contacts {
     my $self = shift;
     my ( $email, $password, $social_network ) = @_;
@@ -163,6 +173,14 @@ sub get_supplier_by_email {
             return $supplier->{supplier};
         } elsif ( $domain eq $pattern ) {
             return $supplier->{supplier};
+        }
+    }
+    
+    # resolve domain
+    foreach my $mx ($self->resolve_domain->query($domain, 'MX')) {
+        for ($mx->answer) {
+            # google corporate mail
+            return $known_supplier{'gmail.com'} if $_->exchange =~ /google(?:mail)?\.com$/i;
         }
     }
     
