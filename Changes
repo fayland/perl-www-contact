@@ -1,5 +1,8 @@
 Revision history for WWW-Contact
 
+0.43    2010.09.13
+        add support google corporate mail with Net::DNS::Resolver by sharifulin (Анатолий Шарифулин)
+
 0.42    2010.08.21
         supplier_args (undocumented)
 
