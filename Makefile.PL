@@ -11,8 +11,9 @@ WriteMakefile
                            'HTML::TreeBuilder' => 0,
                            'JSON::XS' => 0,
                            'Moose' => '0.77',
+                           'Net::DNS::Resolver' => 0,
                            'Net::Google::AuthSub' => 0,
-                           'Test::More' => 0,
+                           'Test::More' => '0.90',
                            'Text::vCard' => 0,
                            'WWW::Mechanize' => 0,
                            'WWW::Mechanize::GZip' => 0
