@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use FindBin qw/$Bin/;
 use lib "$Bin/lib";
-use Test::More tests => 16;
+use Test::More;
 use WWW::Contact;
 
 my $wc = WWW::Contact->new();
@@ -49,5 +49,7 @@ my $r = $wc->resolve;
 is(scalar keys %$r, 2);
 is($r->{'uplifto.ru'}, 'GoogleContactsAPI');
 is($r->{'dcp24.ru'  }, 'GoogleContactsAPI');
+
+done_testing();
 
 1;

@@ -8,7 +8,7 @@ my $builder = Module::Build->new(
     dist_author         => 'Fayland Lam <fayland@gmail.com>',
     dist_version_from   => 'lib/WWW/Contact.pm',
     build_requires => {
-        'Test::More' => 0,
+        'Test::More' => '0.90',
     },
     requires => {
         'Moose' => '0.77',
