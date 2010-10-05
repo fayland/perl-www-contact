@@ -1,5 +1,8 @@
 Revision history for WWW-Contact
 
+0.44    2010.10.05
+        Return most Google contact fields instead of just name and email by Denis Howe
+
 0.43    2010.09.13
         add support google corporate mail with Net::DNS::Resolver by sharifulin (Анатолий Шарифулин)
 

@@ -3,9 +3,10 @@ package WWW::Contact::GoogleContactsAPI;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.23';
+our $VERSION   = '0.44';
 our $AUTHORITY = 'cpan:FAYLAND';
 
+has 'skip_NoEmail' => ( is => 'ro', isa => 'Bool', default => 1 );
 has authsub => (
     is => 'ro',
     isa => 'Net::Google::AuthSub',
@@ -31,8 +32,7 @@ has 'json' =>
 # Authenticate with $email and $password and return either an array
 # of contacts or a reference to an array, according to context
 
-sub get_contacts
-{
+sub get_contacts {
     my ($self, $email, $password) = @_;
 
     $self->errstr(undef);				# Reset
@@ -40,7 +40,7 @@ sub get_contacts
     my $resp = $self->authsub->login($email, $password);
     unless ($resp && $resp->is_success)
 	{
-        $self->errstr("Wrong username or password");
+        $self->errstr("Wrong Username or Password");
         return;
     }
 	my $url = "http://www.google.com/m8/feeds/contacts/default/full"
@@ -55,6 +55,9 @@ sub get_contacts
 	@contacts = map $self->make_contact($_), @{$data->{entry}}
 		if ($data);
 
+    @contacts = grep { exists $_->{email} } @contacts
+        if $self->skip_NoEmail;
+
     return wantarray ? @contacts : \@contacts;
 }
 
@@ -62,16 +65,14 @@ sub get_contacts
 # Feyland's 0.23 only returned "name" and "email" fields, we return
 # everything.
 
-sub make_contact
-{
+sub make_contact {
 	my ($self, $in) = @_;
 
 	my %orig = %$in;
 	my $out = {};
 
 	my $name;
-	if (my $n = delete $in->{'gd$name'})
-	{
+	if (my $n = delete $in->{'gd$name'}) {
 		$name = $n->{'gd$fullName'}->{'$t'};
 		$out->{name} = $name;		# Backward compatible
 		for ($n->{'gd$familyName'}->{'$t'})
@@ -158,7 +159,9 @@ sub make_contact
 	foreach (@phones)
 	{
 		my ($type) = (delete $_->{rel} || "") =~ /#(.*)/;
-		$_ = [delete $_->{'$t'}, $type];
+		my $t = delete $_->{'$t'};
+		$t =~ s/(^\s+|\s+$)//isg;
+		$_ = [$t, $type];
 	}
 	$out->{phones} = \@phones
 		if (@phones);
@@ -223,8 +226,7 @@ sub make_contact
 
 { # statics
 	my %name;							# Map known URLs to group names
-sub group_name
-{
+sub group_name {
 	my ($self, $g) = @_;
 
 	my $url = $g->{href};
@@ -245,9 +247,7 @@ sub group_name
 }
 
 # Given birth date YYYY-MM-DD, return the age in years
-
-sub _age
-{
+sub _age {
 	my ($dob) = @_;
 
 	my ($by, $bm, $bd) = split /-/, $dob;
