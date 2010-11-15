@@ -3,10 +3,12 @@ package WWW::Contact::Yahoo;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.40';
+our $VERSION   = '0.45';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 has '+ua_class' => ( default => 'WWW::Mechanize::GZip' );
+
+use HTML::TreeBuilder;
 
 sub get_contacts {
     my ($self, $email, $password) = @_;
@@ -51,11 +53,7 @@ sub get_contacts {
         button => 'submit[action_display]',
     ) || return;
     
-    require HTML::TreeBuilder;
-    my $tree = HTML::TreeBuilder->new;
-    $tree->parse_content($ua->content);
-    $tree->elementify;
-    
+    my $tree = HTML::TreeBuilder->new_from_content( decode('utf8', $ua->content) );
     my @tables = $tree->look_down( '_tag', 'table', 'class', 'qprintable2' );
     while (my $table = shift @tables) {
         # two tr, one has class phead
@@ -95,6 +93,7 @@ sub get_contacts {
             email => $email,
         };
     }
+    $tree = $tree->delete;
 
     return wantarray ? @contacts : \@contacts;
 }
