@@ -41,6 +41,7 @@ has 'ua' => (
             cookie_jar  => {},
             stack_depth => 1,
             timeout     => 60,
+            autocheck   => 0,
         );
     }
 );

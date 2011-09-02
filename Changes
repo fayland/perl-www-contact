@@ -1,7 +1,9 @@
 Revision history for WWW-Contact
 
-0.45
+0.46    2011.09.02
         Yahoo utf8 fixes
+        Hotmail fixes
+        AOL fixes
 
 0.44    2010.10.05
         Return most Google contact fields instead of just name and email by Denis Howe

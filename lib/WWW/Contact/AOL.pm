@@ -3,7 +3,7 @@ package WWW::Contact::AOL;
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.39';
+our $VERSION   = '0.46';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
@@ -36,7 +36,7 @@ sub get_contacts {
     $self->debug('Login OK');
 
     my ($url) = ( $content =~ /\'(http\:\/\/(.*?))\'/ );
-    $self->get($url) || return;
+    $self->ua->get($url); # usually we don't care the Response status here
     $self->get('http://mail.aol.com/');
     
     # http://my.screenname.aol.com/_cqr/login/login.psp?sitedomain=sns.mail.aol.com&lang=en&locale=us&authLev=0&uitype=mini&siteState=ver%3a4%7crt%3aSTANDARD%7cat%3aSNS%7cld%3amail.aol.com%7crp%3aLite%252fToday.aspx%7cuv%3aAOL%7clc%3aen-us%7cmt%3aAOL%7csnt%3aScreenName%7csid%3a721f5d19-a18f-4f11-bf35-500d91ddf6d6&seamless=novl&loginId=&_sns_width_=174&_sns_height_=196&_sns_fg_color_=373737&_sns_err_color_=C81A1A&_sns_link_color_=0066CC&_sns_bg_color_=FFFFFF&redirType=js

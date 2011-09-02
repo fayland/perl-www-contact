@@ -7,7 +7,7 @@ use HTTP::Request::Common qw/POST/;
 use HTML::TokeParser::Simple;
 use HTML::Entities ();
 
-our $VERSION   = '0.41';
+our $VERSION   = '0.46';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
@@ -67,6 +67,8 @@ sub get_contacts {
 	    $self->errstr('Wrong Username or Password');
 	    return;
 	}
+	
+	$ua->cookie_jar->clear( '.live.com', '/', 'WLSSC' );
 
     # <html><head><script type="text/javascript">function rd(){window.location.replace("http://mail.live.com/default.aspx?wa=wsignin1.0");}function OnBack(){}</script></head><body onload="javascript:rd();"></body></html>
     my ( $url ) = ( $ua->content =~ /replace\(\"([^\"]+)\"/ );
