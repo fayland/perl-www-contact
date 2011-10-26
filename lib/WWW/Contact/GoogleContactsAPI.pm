@@ -46,7 +46,8 @@ sub get_contacts {
 	my $url = "http://www.google.com/m8/feeds/contacts/default/full"
 		. "?max-results=9999&alt=json";
 	$url .= "&v=3.0";					# Gives more fields
-    $self->get($url, $self->authsub->auth_params);
+    $self->get($url, $self->authsub->auth_params)
+	or return;
     my $content = $self->ua->content;
     my $data = $self->json->decode($content);
 	$data = $data->{feed} if ($data);
@@ -234,6 +235,7 @@ sub group_name {
 	unless (exists $name{$url})
 	{
 		$_ = eval { $self->get("$url?alt=json", $self->authsub->auth_params) };
+		$self->errstr(undef);
 		if ($_)
 		{
 			$_ = $self->ua->content;
