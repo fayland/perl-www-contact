@@ -86,6 +86,19 @@ sub make_contact {
 		}
 	}
 
+        my @links;
+        local $_ = delete $in->{link}
+                and @links = @$_;
+
+        foreach (@links)
+        {
+                if ($_->{type} eq 'image/*' && exists $_->{'gd$etag'}) {
+                        (my $href = $_->{href}) =~ s/\?v=3\.0//;
+                        $out->{photo}{href} = $href;
+                        $out->{photo}{content} = sub { $self->ua->get($href, $self->authsub->auth_params)->decoded_content() };
+                }
+        }
+
 	# $out->{emails} = [[ADDRESS, TYPE], ...]
 	my @emails;
 	local $_ = delete $in->{'gd$email'}
