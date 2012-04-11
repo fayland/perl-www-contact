@@ -1,9 +1,10 @@
 package WWW::Contact::Yahoo;
 
+use Encode qw( decode );
 use Moose;
 extends 'WWW::Contact::Base';
 
-our $VERSION   = '0.45';
+our $VERSION   = '0.46';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 has '+ua_class' => ( default => 'WWW::Mechanize::GZip' );
@@ -16,10 +17,10 @@ sub get_contacts {
     # reset
     $self->errstr(undef);
     my @contacts;
-    
+
     my $ua = $self->ua;
     $self->debug("start get_contacts from Yahoo!");
-    
+
     # to form
     $self->get('https://login.yahoo.com/config/login_verify2?&.src=ym') || return;
     $self->submit_form(
@@ -34,13 +35,13 @@ sub get_contacts {
         $self->errstr('Wrong Username or Password');
         return;
     }
-    
+
     # https://edit.yahoo.com/recovery/update
     if ( $ua->base =~ /recovery\/update/ ) {
         $self->errstr("Account Recovery Issue");
         return;
     }
-    
+
     $self->debug('Login OK');
 
     $self->get('http://address.mail.yahoo.com/?_src=&VPC=tools_print') || return;
@@ -52,7 +53,7 @@ sub get_contacts {
         },
         button => 'submit[action_display]',
     ) || return;
-    
+
     my $tree = HTML::TreeBuilder->new_from_content( decode('utf8', $ua->content) );
     my @tables = $tree->look_down( '_tag', 'table', 'class', 'qprintable2' );
     while (my $table = shift @tables) {
@@ -112,7 +113,7 @@ WWW::Contact::Yahoo - Get contacts/addressbook from Yahoo! Mail
 
     use WWW::Contact;
     use Data::Dumper;
-    
+
     my $wc       = WWW::Contact->new();
     my @contacts = $wc->get_contacts('itsa@yahoo.com', 'password');
     my $errstr   = $wc->errstr;
