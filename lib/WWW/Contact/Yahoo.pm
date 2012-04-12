@@ -2,6 +2,7 @@ package WWW::Contact::Yahoo;
 
 use Moose;
 extends 'WWW::Contact::Base';
+use Encode;
 
 our $VERSION   = '0.45';
 our $AUTHORITY = 'cpan:FAYLAND';
