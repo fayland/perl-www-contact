@@ -71,7 +71,6 @@ sub make_contact {
 
 	my %orig = %$in;
 	my $out = {};
-
 	my $name;
 	if (my $n = delete $in->{'gd$name'}) {
 		$name = $n->{'gd$fullName'}->{'$t'};
@@ -121,16 +120,26 @@ sub make_contact {
 
 	# $out->{addresses} = [[TYPE => ADDRESS], ...]
 	my @ads;
+        my @postal_ads;
 	$_ = delete $in->{'gd$structuredPostalAddress'}
 		and @ads = @$_;
 	foreach (@ads)
 	{
+                my $address;
+                ($address->{street1}, $address->{street2}) = split /\n/, delete $_->{'gd$street'}{'$t'}
+                $address->{postal_code} = delete $_->{'gd$postcode'}{'$t'};
+                $address->{city} = delete $_->{'gd$city'}{'$t'};
+                $address->{state} = delete $_->{'gd$region'}{'$t'};
+                $address->{country} = delete $_->{'gd$country'}{'$t'};
+
 		my ($type) = (delete $_->{rel}) =~ /#(.*)/;
 		$_ = (delete $_->{'gd$formattedAddress'})->{'$t'};
 		s/\s+$//g; s/\n/, /g;
 		$_ = [$_, $type];
+                push @postal_ads, $address;
 	}
 	$out->{addresses} = \@ads if (@ads);
+        $out->{postal_addresses} = \@postal_ads if (@postal_ads);
 
 	my @events;
 	$_ = delete $in->{'gContact$event'}
