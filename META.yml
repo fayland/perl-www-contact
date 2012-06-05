@@ -37,6 +37,9 @@ provides:
   WWW::Contact::GoogleContactsAPI:
     file: lib/WWW/Contact/GoogleContactsAPI.pm
     version: 0.44
+  WWW::Contact::GoogleContactsAPIOAuth2:
+    file: lib/WWW/Contact/GoogleContactsAPIOAuth2.pm
+    version: 0.001
   WWW::Contact::Hotmail:
     file: lib/WWW/Contact/Hotmail.pm
     version: 0.46
