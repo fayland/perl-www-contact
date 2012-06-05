@@ -126,7 +126,7 @@ sub make_contact {
 	foreach (@ads)
 	{
                 my $address;
-                ($address->{street1}, $address->{street2}) = split /\n/, delete $_->{'gd$street'}{'$t'}
+                ($address->{street1}, $address->{street2}) = split /\n/, delete $_->{'gd$street'}{'$t'};
                 $address->{postal_code} = delete $_->{'gd$postcode'}{'$t'};
                 $address->{city} = delete $_->{'gd$city'}{'$t'};
                 $address->{state} = delete $_->{'gd$region'}{'$t'};
