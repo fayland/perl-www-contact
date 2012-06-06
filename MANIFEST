@@ -10,6 +10,7 @@ lib/WWW/Contact/BG/Mail.pm
 lib/WWW/Contact/CN/163.pm
 lib/WWW/Contact/Gmail.pm
 lib/WWW/Contact/GoogleContactsAPI.pm
+lib/WWW/Contact/GoogleContactsAPIOAuth2.pm
 lib/WWW/Contact/Hotmail.pm
 lib/WWW/Contact/Indiatimes.pm
 lib/WWW/Contact/Lycos.pm

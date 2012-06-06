@@ -43,7 +43,7 @@ sub get_contacts {
         $self->errstr("Wrong Username or Password");
         return;
     }
-	my $url = "http://www.google.com/m8/feeds/contacts/default/full"
+	my $url = "https://www.google.com/m8/feeds/contacts/default/full"
 		. "?max-results=9999&alt=json";
 	$url .= "&v=3.0";					# Gives more fields
     $self->get($url, $self->authsub->auth_params)
