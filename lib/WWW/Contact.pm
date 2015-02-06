@@ -1,6 +1,7 @@
 package WWW::Contact;
 
 use Class::MOP ();
+use Class::Load;
 use Moose;
 
 our $VERSION   = '0.49';
@@ -139,7 +140,7 @@ sub get_contacts {
     }
     
     my $module = 'WWW::Contact::' . $supplier;
-    Class::MOP::load_class($module);
+    Class::Load::load_class($module);
     my $wc = $module->new( $self->supplier_args );
     
     # reset
