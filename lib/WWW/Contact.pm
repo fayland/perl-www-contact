@@ -1,6 +1,6 @@
 package WWW::Contact;
 
-use Class::MOP ();
+use Class::Load;
 use Moose;
 
 our $VERSION   = '0.49';
@@ -26,7 +26,7 @@ has 'known_supplier' => (
             'aol.com'        => 'AOL',
             'indiatimes.com' => 'Indiatimes',
             'lycos.com'      => 'Lycos',
-            
+
             # cn
             '163.com'        => 'CN::163',
             'yeah.net'       => 'CN::163',
@@ -46,7 +46,7 @@ has 'known_supplier' => (
             'techie.com'     => 'Mail',
             'usa.com'        => 'Mail',
             'writeme.com'    => 'Mail',
-            
+
             # hotmail
             'hotmail.com'       => 'Hotmail',
             'live.com'          => 'Hotmail',
@@ -110,12 +110,12 @@ has 'resolve_domain' => (
 sub get_contacts {
     my $self = shift;
     my ( $email, $password, $social_network ) = @_;
-    
+
     unless ( $email and $password ) {
         $self->errstr('Both email and password are required.');
         return;
     }
-    
+
     unless ( $email =~ m/^(.+)\@(([^.]+)\.(.+))$/ ) {
         $self->errstr('You must supply full email address.');
         return;
@@ -137,14 +137,14 @@ sub get_contacts {
         }
         return;
     }
-    
+
     my $module = 'WWW::Contact::' . $supplier;
-    Class::MOP::load_class($module);
+    Class::Load::load_class($module);
     my $wc = $module->new( $self->supplier_args );
-    
+
     # reset
     $self->errstr(undef);
-    
+
     my $contacts = $wc->get_contacts( $email, $password );
 
     if ( $wc->errstr ) {
@@ -161,16 +161,16 @@ sub get_supplier_by_email {
     my %known_supplier = $self->known_supplier;
 
     my ($username, $domain) = split('@', $email);
-    
+
     if ( exists $known_supplier{ $domain } ) {
         return $known_supplier{ $domain };
     }
-    
+
     # @yahoo.com @yahoo.XX @XX.yahoo.XX
     if ( $email =~ /[\@\.]yahoo\./ ) {
         return 'Yahoo';
     }
-    
+
     my @supplier_pattern = $self->supplier_pattern;
     foreach my $supplier (@supplier_pattern) {
         my $pattern = $supplier->{pattern};
@@ -181,19 +181,20 @@ sub get_supplier_by_email {
             return $supplier->{supplier};
         }
     }
-    
+
     # resolve domain
     my $r = $self->resolve;
     return $r->{ $domain } if exists $r->{ $domain };
-    
+
     # warn 'resolve domain';
     foreach my $mx ($self->resolve_domain->query($domain, 'MX')) {
+        next unless $mx;
         for ($mx->answer) {
             # google corporate mail
             return $r->{ $domain } = $known_supplier{'gmail.com'} if $_->exchange =~ /google(?:mail)?\.com$/i;
         }
     }
-    
+
     return;
 }
 
@@ -230,7 +231,7 @@ WWW::Contact - Get contacts/addressbook from Web
 
     use WWW::Contact;
     use Data::Dumper;
-    
+
     # Get contacts from email providers.
     my $wc       = WWW::Contact->new();
     my @contacts = $wc->get_contacts('fayland@gmail.com', 'password');
@@ -240,7 +241,7 @@ WWW::Contact - Get contacts/addressbook from Web
     } else {
         print Dumper(\@contacts);
     }
-    
+
     # Get contacts from social networks (eg: Plaxo)
     my $ws       = WWW::Contact->new();
     # Note that the last argument for get_contacts() is mandatory,
@@ -252,7 +253,7 @@ WWW::Contact - Get contacts/addressbook from Web
     } else {
         print Dumper(\@contacts);
     }
-    
+
 
 =head1 DESCRIPTION
 
@@ -347,21 +348,21 @@ Please read L<WWW::Contact::Base> and examples: L<WWW::Contact::Yahoo> and L<WWW
 Assuming we write a custom module as WWW::Contact::Unknown
 
     package WWW::Contact::Unknown;
-    
+
     use Moose;
     extends 'WWW::Contact::Base';
-    
+
     sub get_contacts {
         my ($self, $email, $password) = @_;
-        
+
         # reset
         $self->errstr(undef);
-        
+
         if ($email eq 'a@a.com' and $password ne 'a') {
             $self->errstr('Wrong Username or Password');
             return;
         }
-        
+
         my @contacts = ( {
             email => 'b@b.com',
             name => 'b',
@@ -371,7 +372,7 @@ Assuming we write a custom module as WWW::Contact::Unknown
         } );
         return wantarray ? @contacts : \@contacts;
     }
-    
+
     1;
 
 We can use it within WWW::Contact
@@ -380,7 +381,7 @@ We can use it within WWW::Contact
     $wc->register_supplier( qr/\@a\.com$/, 'Unknown' );
     # or
     # $wc->register_supplier( 'a.com', 'Unknown' );
-    
+
     my @contacts = $wc->get_contacts('a@a.com', 'b');
     my $errstr = $wc->errstr;
 

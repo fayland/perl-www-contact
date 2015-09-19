@@ -36,19 +36,21 @@ is($supplier, 'CN::163');
 $supplier = $wc->get_supplier_by_email('fayland@aol.com');
 is($supplier, 'AOL');
 
-$supplier = $wc->get_supplier_by_email('kdm@dcp24.ru');
-is($supplier, 'GoogleContactsAPI');
+if ($ENV{TEST_AUTHOR}) {
+    $supplier = $wc->get_supplier_by_email('kdm@dcp24.ru');
+    is($supplier, 'GoogleContactsAPI');
 
-$supplier = $wc->get_supplier_by_email('pimenov@uplifto.ru');
-is($supplier, 'GoogleContactsAPI');
+    $supplier = $wc->get_supplier_by_email('pimenov@uplifto.ru');
+    is($supplier, 'GoogleContactsAPI');
 
-$supplier = $wc->get_supplier_by_email('pimenov@uplifto.ru');
-is($supplier, 'GoogleContactsAPI');
+    $supplier = $wc->get_supplier_by_email('pimenov@uplifto.ru');
+    is($supplier, 'GoogleContactsAPI');
 
-my $r = $wc->resolve;
-is(scalar keys %$r, 2);
-is($r->{'uplifto.ru'}, 'GoogleContactsAPI');
-is($r->{'dcp24.ru'  }, 'GoogleContactsAPI');
+    my $r = $wc->resolve;
+    is(scalar keys %$r, 2);
+    is($r->{'uplifto.ru'}, 'GoogleContactsAPI');
+    is($r->{'dcp24.ru'  }, 'GoogleContactsAPI');
+}
 
 done_testing();
 
