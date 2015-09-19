@@ -38,3 +38,4 @@ t/110-plaxo.t
 t/999-author.t
 t/lib/WWW/Contact/Unknown.pm
 t/pod.t
+META.json

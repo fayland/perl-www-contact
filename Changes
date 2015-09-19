@@ -1,5 +1,8 @@
 Revision history for WWW-Contact
 
+0.50    2015.09.19
+        - code is not working well but the build is OK now
+
 0.47    2011.10.27
         GoogleContactsAPI: ignore google api group_name errors (Rhesa Rozendaal)
         AOL: skip data update form
@@ -111,7 +114,7 @@ Revision history for WWW-Contact
 
 0.14    2008.10.28
         added WWW::Contact::Lycos by Sachin Sebastian
-        
+
 0.13    2008.10.28
         added WWW::Contact::Indiatimes by Sachin Sebastian
         remove google.com check and wrong password check from test files.

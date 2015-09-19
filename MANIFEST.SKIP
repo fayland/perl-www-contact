@@ -49,3 +49,4 @@ author.txt$
 # Avoid archives of this distribution
 \bWWW-Contact-[\d\.\_]+
 ^MYMETA.yml$
+^MYMETA\.json$
