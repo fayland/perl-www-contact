@@ -2,6 +2,7 @@ package WWW::Contact::AOL;
 
 use Moose;
 extends 'WWW::Contact::Base';
+use Text::CSV;
 
 our $VERSION   = '0.47';
 our $AUTHORITY = 'cpan:FAYLAND';
@@ -11,15 +12,17 @@ sub get_contacts {
     
     # reset
     $self->errstr(undef);
-    my @contacts;
     
     my ( $username ) = split('@', $email);
     
     my $ua = $self->ua;
     $self->debug("start get_contacts from AOL mail");
+
+    # if we don't identify as a known browser, AOL won't send us JavaScript with userId
+    $ua->agent('Mozilla/5.0');
     
     # to form
-    $self->get('https://my.screenname.aol.com/_cqr/login/login.psp?mcState=initialized&uitype=mini&sitedomain=registration.aol.com&authLev=1&seamless=novl&lang=en&locale=us') || return;
+    $self->get('https://my.screenname.aol.com/_cqr/login/login.psp?sitedomain=www.aol.com&lang=en&locale=us&authLev=0&siteState=https%3A%2F%2Fwww.aol.com%2F') || return;
     $self->submit_form(
         form_name => 'AOLLoginForm',
         fields    => {
@@ -32,92 +35,46 @@ sub get_contacts {
         $self->errstr('Wrong Username or Password');
         return;
     }
-    
     $self->debug('Login OK');
-    #snsRedir("https://account.login.aol.com/opr/_cqr/data/update.psp?sitedomain=registration.aol.com&authLev=1&lang=en&locale=us&acctfixsid=oar-artifact&uitype=mini&mcAuth=%2FBcAG06o0D0AAK9OARkfR06o0HkI3xp9FQJ8VlIAAA%3D%3D");
-    my ($url) = ( $content =~ /snsRedir\([\"\"]([^\'\"]+)[\"\"]/ );
-    
-    $ua->get($url); # usually we don't care the Response status here
-    
-    # but we have to skip data update form
-    # skip the data update
-    if ($ua->content =~ /oprFormV2/) {
-        eval { $ua->submit_form( form_name => 'oprFormV2' , fields => { action => 'dataUpdateSkip' } ); };
-    }
-    
-    $self->get('http://mail.aol.com/');
-    
-    # http://my.screenname.aol.com/_cqr/login/login.psp?sitedomain=sns.mail.aol.com&lang=en&locale=us&authLev=0&uitype=mini&siteState=ver%3a4%7crt%3aSTANDARD%7cat%3aSNS%7cld%3amail.aol.com%7crp%3aLite%252fToday.aspx%7cuv%3aAOL%7clc%3aen-us%7cmt%3aAOL%7csnt%3aScreenName%7csid%3a721f5d19-a18f-4f11-bf35-500d91ddf6d6&seamless=novl&loginId=&_sns_width_=174&_sns_height_=196&_sns_fg_color_=373737&_sns_err_color_=C81A1A&_sns_link_color_=0066CC&_sns_bg_color_=FFFFFF&redirType=js
-    $content = $ua->{content};
-    if ( $content =~ /(http\:\/\/my.screenname.aol.com\/_cqr\/login\/login.psp([^\'\"]+))/s ) {
-        $self->get($1) || return;
-        $content = $ua->{content};
-    }
-    if ( $content =~ /checkErrorAndSubmitForm/ and $content =~ /\'(http\:\/\/(.*?))\'/ ) {
-        $self->get($1) || return;
-    }
 
-    my ($gSuccessPath, $aol_v) = ( $ua->content() =~ /\.com\/([^\/]+)\/(aol[^\/]*)\/en\-us/ );
-    $self->get( "http://mail.aol.com/$gSuccessPath/$aol_v/en-us/Lite/Today.aspx?src=bandwidth" ) || return;
+    $self->get('https://mail.aol.com/');
 
-    my ($uid) = ($ua->content() =~ /user\=([^\'\&]+)[\'\&]/);
-    unless ($uid) {
-        $self->errstr('Wrong Password');
-        return;
-    }
-    
-    # http://mail.aol.com/39598/aol/en-us/Lite/addresslist-print.aspx?command=all&sort=FirstLastNick&sortDir=Ascending&nameFormat=FirstLastNick&user=lP9ZCc0KdY
-    $ua->get(
-        "http://mail.aol.com/$gSuccessPath/$aol_v/en-us/Lite/addresslist-print.aspx?command=all&sort=FirstLastNick&sortDir=Ascending&nameFormat=FirstLastNick&user=$uid"
-    ) || return;
+    $self->get('https://mail.aol.com/webmail-std/en-us/suite');
+    my ($user_id) = $ua->content =~ /var\s+userId\s*=\s*"(\w+)"/;
+    return if not defined $user_id;
 
-    $content = $ua->content();
-    @contacts = $self->get_contacts_from_html($content);
-    @contacts = grep { lc($_->{email}) ne lc($email) } @contacts; # skip himself
-    
-    # we don't care if it works or not, to avoid
-    # Error GETing 
-    eval {
-        $ua->get(
-            "http://mail.aol.com/$gSuccessPath/$aol_v/en-us/common/Logout.aspx"
-        );
-    };
-    
-    return wantarray ? @contacts : \@contacts;
-}
+    $self->get("https://mail.aol.com/webmail/ExportContacts?command=all&format=csv&user=$user_id") || return;
 
-sub get_contacts_from_html {
-    my ($self, $content) = @_;
+    $content = $ua->content;
+    my $csv = Text::CSV->new({ binary => 1 });
+    open my $fh_csv, '<', \$content;
+    my @header = @{ $csv->getline($fh_csv) };
 
     my @contacts;
-    my @contents = split(
-        '<tr><td colspan="4"><hr class="contactSeparator"></td></tr>',
-        $content );
-    foreach my $c (@contents) {
-        my ( $firstname, $last_name, $name )
-            = ( $c =~ /fullName\"\>(\S*)\s*(\S*)\s*\<i\>\((.*?)\)/ );
-        my ($email1) = (
-            $c =~ /\<span\>Email 1\:\<\/span\>\s*\<span\>([^<^>]*)\<\/span\>/
-        );
-        my ($email2) = (
-            $c =~ /\<span\>Email 2\:\<\/span\>\s*\<span\>([^<^>]*)\<\/span\>/
-        );
-        my $email = $email1 || $email2;
-        unless ($email) {
-            my ($screen_name) = ( $c
-                    =~ /\<span\>Screen Name\:\<\/span\>\s*\<span\>([^<^>]*)\<\/span\>/
-            );
-            $email = $screen_name . '@aol.com' if ($screen_name);
-        }
-        next unless ($email);
+    while (my $row_ref = $csv->getline($fh_csv)) {
+        my %row;
+        @row{@header} = @$row_ref;
 
-        push @contacts, {
-            name       => $name,
-            email      => $email
-        };
+        my $name = join ' ', grep {$_} @row{qw[ FirstName LastName ]};
+        if ($row{NickName}) {
+            $name .= ' ' if $name;    # no space if only NickName present
+            $name .= "($row{NickName})";
+        }
+
+        my $email = $row{'E-mail'} || $row{'E-mail2'};
+        if (not $email and $row{ScreenName}) {
+            $email = $row{ScreenName} . '@aol.com';
+        }
+        next if not $email;
+
+        push @contacts, { name => $name, email => $email };
     }
+    $csv->eof or return;
+    close $fh_csv;
+
+    @contacts = grep { lc($_->{email}) ne lc($email) } @contacts; # skip himself
     
-    return @contacts;
+    return wantarray ? @contacts : \@contacts;
 }
 
 no Moose;
