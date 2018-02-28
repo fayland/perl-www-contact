@@ -22,6 +22,7 @@ my $builder = Module::Build->new(
         'Text::vCard' => 0,
         'HTML::Entities' => 0,
         'Net::DNS::Resolver' => 0,
+        'Text::CSV' => 0,
     },
     add_to_cleanup      => [ 'WWW-Contact-*' ],
     create_makefile_pl => 'traditional',
