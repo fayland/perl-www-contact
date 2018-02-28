@@ -4,23 +4,23 @@ use Moose;
 extends 'WWW::Contact::Base';
 use Text::CSV;
 
-our $VERSION   = '0.47';
+our $VERSION   = '0.51';
 our $AUTHORITY = 'cpan:FAYLAND';
 
 sub get_contacts {
     my ($self, $email, $password) = @_;
-    
+
     # reset
     $self->errstr(undef);
-    
+
     my ( $username ) = split('@', $email);
-    
+
     my $ua = $self->ua;
     $self->debug("start get_contacts from AOL mail");
 
     # if we don't identify as a known browser, AOL won't send us JavaScript with userId
     $ua->agent('Mozilla/5.0');
-    
+
     # to form
     $self->get('https://my.screenname.aol.com/_cqr/login/login.psp?sitedomain=www.aol.com&lang=en&locale=us&authLev=0&siteState=https%3A%2F%2Fwww.aol.com%2F') || return;
     $self->submit_form(
@@ -73,7 +73,7 @@ sub get_contacts {
     close $fh_csv;
 
     @contacts = grep { lc($_->{email}) ne lc($email) } @contacts; # skip himself
-    
+
     return wantarray ? @contacts : \@contacts;
 }
 
@@ -91,7 +91,7 @@ WWW::Contact::AOL - Get contacts/addressbook from AOL Mail
 
     use WWW::Contact;
     use Data::Dumper;
-    
+
     my $wc       = WWW::Contact->new();
     my @contacts = $wc->get_contacts('itsa@aol.com', 'password');
     my $errstr   = $wc->errstr;

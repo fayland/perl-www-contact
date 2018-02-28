@@ -1,5 +1,8 @@
 Revision history for WWW-Contact
 
+0.51    2018.02.28
+        - Fix support for AOL mail #12 (s-nez)
+
 0.50    2015.09.19
         - code is not working well but the build is OK now
 

@@ -4,7 +4,7 @@
       "Fayland Lam <fayland@gmail.com>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.421",
+   "generated_by" : "Module::Build version 0.422",
    "license" : [
       "perl_5"
    ],
@@ -34,6 +34,7 @@
             "Moose" : "0.77",
             "Net::DNS::Resolver" : "0",
             "Net::Google::AuthSub" : "0",
+            "Text::CSV" : "0",
             "Text::vCard" : "0",
             "WWW::Mechanize" : "0",
             "WWW::Mechanize::GZip" : "0"
@@ -43,11 +44,11 @@
    "provides" : {
       "WWW::Contact" : {
          "file" : "lib/WWW/Contact.pm",
-         "version" : "0.50"
+         "version" : "0.51"
       },
       "WWW::Contact::AOL" : {
          "file" : "lib/WWW/Contact/AOL.pm",
-         "version" : "0.47"
+         "version" : "0.51"
       },
       "WWW::Contact::BG::Abv" : {
          "file" : "lib/WWW/Contact/BG/Abv.pm",
@@ -122,5 +123,6 @@
          "url" : "http://github.com/fayland/perl-www-contact/tree/master"
       }
    },
-   "version" : "0.50"
+   "version" : "0.51",
+   "x_serialization_backend" : "JSON::PP version 2.27400_02"
 }
